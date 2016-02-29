@@ -1,3 +1,6 @@
+#define GDT_ENTRY(n)	\
+	((n) << 3)
+
 #define MAKE_NULL_SEG_DESC	\
 	.word 0, 0;
 	.byte 0, 0, 0, 0
@@ -9,6 +12,11 @@
 
 .globl start
 start:
+	.code16				# Assemble for 16-bit mode
+	cli					# Disable interrupts
+#	cld					# String operations increment(necessary?)
+
+	# Enable A20:
 	seta20.1:
 		inb		$0x64, %al
 		testb	$0x2, %al
@@ -24,6 +32,37 @@ start:
 
 		movb	$0xdf, %al
 		outb	%al, $0x60
+
+	# Set up the flat mode:
+	xorw	%ax, %ax
+	movw	%ax, %ds	# Data Segment
+	movw	%ax, %es	# Extra Segment
+	movw	%ax, %ss	# Stack Segment
+
+	# Switch from real to protected mode
+	lgdt	gdtdesc		# Set up GDT
+	movl	%cr0, %eax
+	orl		$0x1, %eax
+	movl	%eax, %cr0	# CR0 |= PROTECT_ENABLE_BIT
+	ljmp	$GDT_ENTRY(1), $start32
+						# Set CS to GDT(1) and long jump to start32 in 32-bit mode
+
+
+start32:
+	.code32				# Assemble for 32-bit mode
+
+	# Set up the protected-mode data segment registers
+	movw	$GDT_ENTRY(2), %ax
+	movw	%ax, %ds	# Data Segment
+	movw	%ax, %es	# Extra Segment
+#	movw	%ax, %fs	# (unnecessery)
+#	movw	%ax, %gs	# (unnecessery)
+	movw	%ax, %ss	# Stack Segment
+
+	# Set up the stack pointer and call into C
+	movl	$0x8000, %esp
+	call	main
+
 
 # GDT
 .p2align 2
