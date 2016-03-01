@@ -70,7 +70,7 @@ $(OBJ_BOOT_DIR)/%.o: $(BOOT_DIR)/%.c
 	$(CC) $(CFLAGS) -Os $< -o $@
 
 $(KERNEL): $(LD_SCRIPT)
-	$(KERNEL): $(KERNEL_O) $(LIB_O)
+$(KERNEL): $(KERNEL_O) $(LIB_O)
 	$(LD) -m elf_i386 -T $(LD_SCRIPT) -nostdlib -o $@ $^ $(shell $(CC) $(CFLAGS) -print-libgcc-file-name)
 
 $(OBJ_LIB_DIR)/%.o : $(LIB_DIR)/%.c
@@ -91,10 +91,10 @@ qemu: $(IMAGE)
 
 # Faster, but not suitable for debugging
 qemu-kvm: $(IMAGE)
-    $(QEMU) $(QEMU_OPTIONS) --enable-kvm $(IMAGE)
+	$(QEMU) $(QEMU_OPTIONS) --enable-kvm $(IMAGE)
 
 debug: $(IMAGE)
-    $(QEMU) $(QEMU_DEBUG_OPTIONS) $(QEMU_OPTIONS) $(IMAGE)
+	$(QEMU) $(QEMU_DEBUG_OPTIONS) $(QEMU_OPTIONS) $(IMAGE)
 
 gdb:
 	$(GDB) $(GDB_OPTIONS)

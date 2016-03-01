@@ -1,8 +1,8 @@
 #ifndef JOS_STAB_H
 #define JOS_STAB_H
-#include <inc/types.h>
+#include <lib/types.h>
 
-// <inc/stab.h>
+// <lib/stab.h>
 // STABS debugging info
 
 // The JOS kernel debugger can understand some debugging information

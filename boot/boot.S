@@ -1,14 +1,16 @@
+#include <lib/mmu.h>
+
 #define GDT_ENTRY(n)	\
 	((n) << 3)
 
-#define MAKE_NULL_SEG_DESC	\
-	.word 0, 0;
-	.byte 0, 0, 0, 0
+# #define MAKE_NULL_SEG_DESC	\
+# 	.word 0, 0;
+#	.byte 0, 0, 0, 0
 
-#define MAKE_SEG_DESC(type, base, lim)						\
-	.word (((lim) >> 12) & 0xffff), ((base) & 0xffff);		\
-	.byte (((base) >> 16) & 0xff), (0x90 | (type)),			\
-	(0xc0 | ((lim) >> 28) & 0xff)), (((base) >> 24) &0xff)
+# #define MAKE_SEG_DESC(type, base, lim)						\
+#	.word (((lim) >> 12) & 0xffff), ((base) & 0xffff);		\
+#	.byte (((base) >> 16) & 0xff), (0x90 | (type)),			\
+#	(0xc0 | ((lim) >> 28) & 0xff)), (((base) >> 24) &0xff)
 
 .globl start
 start:
@@ -67,9 +69,9 @@ start32:
 # GDT
 .p2align 2
 gdt:
-	MAKE_NULL_SEG_DESC					# empty segment
-	MAKE_SEG_DESC(0xA, 0x0, 0xffffffff)	# code
-	MAKE_SEG_DESC(0x2, 0x0, 0xffffffff)	# data
+	SEG_NULL							# empty segment
+	SEG(0xA, 0x0, 0xffffffff)			# code
+	SEG(0x2, 0x0, 0xffffffff)			# data
 
 gdtdesc:
 	.word	(gdtdesc - gdt - 1)		# limit = sizeof(gdt) - 1

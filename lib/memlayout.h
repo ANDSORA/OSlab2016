@@ -2,8 +2,8 @@
 #define JOS_INC_MEMLAYOUT_H
 
 #ifndef __ASSEMBLER__
-#include <inc/types.h>
-#include <inc/mmu.h>
+#include <lib/types.h>
+#include <lib/mmu.h>
 #endif /* not __ASSEMBLER__ */
 
 /*
