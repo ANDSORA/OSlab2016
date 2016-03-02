@@ -6,7 +6,7 @@
 
 void readseg(unsigned char*,int,int);
 
-int main(void)
+int bootmain(void)
 {
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;
@@ -25,6 +25,8 @@ int main(void)
 	}
 
 	((void(*)(void))elf->e_entry)(); /* Here we go! */
+
+	while(1);
 }
 
 

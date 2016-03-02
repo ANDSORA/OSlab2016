@@ -63,7 +63,7 @@ start32:
 
 	# Set up the stack pointer and call into C
 	movl	$0x8000, %esp
-	call	main
+	call	bootmain
 
 
 # GDT
