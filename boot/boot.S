@@ -18,6 +18,10 @@ start:
 	cli					# Disable interrupts
 #	cld					# String operations increment(necessary?)
 
+	# Open graph mode:
+	movw	$0x13, %ax
+	int		$0x10
+
 	# Enable A20:
 	seta20.1:
 		inb		$0x64, %al
