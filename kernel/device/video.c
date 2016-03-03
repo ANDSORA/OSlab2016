@@ -5,14 +5,16 @@ uint8_t *vmem = ((uint8_t*)VMEM_ADDR);
 
 void
 init_vmem() {
-	int i,j;
+	int i,j,k;
+	//int i,j;
+	int idx = 0;
 	for(i = 0; i < SCR_HEIGHT; ++ i){
 		for(j = 0; j < SCR_WIDTH; ++ j){
-			int idx = (i << 8) + (i << 6) + j;
-			//vmem[idx] = j%256;
-			int midx = i * MOMOKO_WIDTH + j;
-			if(i < MOMOKO_HEIGHT && j < MOMOKO_WIDTH) vmem[idx] = MOMOKO_pixel[midx];
-			else vmem[idx] = 0;
+			
+			for(k = 0; k < SCR_DEPTH; ++ k){
+				//vmem[idx] = gImage_PARK[idx + 2 - 2*k]; idx++;
+				vmem[idx] = gImage_PARK[idx]; idx++;
+			}
 		}
 	}
 }

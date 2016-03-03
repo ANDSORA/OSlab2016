@@ -3,17 +3,19 @@
 
 #include <include/types.h>
 
-#define SCR_WIDTH	320
-#define SCR_HEIGHT	200
-#define SCR_SIZE	((SCR_WIDTH) * (SCR_HEIGHT))
-#define VMEM_ADDR	0xA0000
+#define SCR_WIDTH	800
+#define SCR_HEIGHT	600
+#define SCR_DEPTH	3
+#define SCR_SIZE	((SCR_WIDTH) * (SCR_HEIGHT) * (SCR_DEPTH))
+#define VMEM_ADDR	0xFC000000
 
 extern uint8_t *vmem;
 
+/*
 static inline void
 draw_pixel(int x, int y, int color) {
 	//assert(x >= 0 && y >= 0 && x < SCR_HEIGHT && y < SCR_WIDTH);
-	vmem[(x << 8) + (x << 6) + y] = color;
-}
+	//vmem[(x << 8) + (x << 6) + y] = color;
+} */
 
 #endif

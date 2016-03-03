@@ -19,7 +19,14 @@ start:
 #	cld					# String operations increment(necessary?)
 
 	# Open graph mode:
-	movw	$0x13, %ax
+	movw	$0x4f02, %ax
+	movw	$0x0115, %bx
+	movw	$0x7e00, %di
+	int		$0x10
+
+	movw	$0x4f01, %ax
+	movw	$0x0115, %cx
+	movw	$0x7e00, %di
 	int		$0x10
 
 	# Enable A20:

@@ -1,7 +1,7 @@
 #ifndef __ASSERT_H__
 #define __ASSERT_H__
 
-void printk(const char *, ...);
+int printk(const char *, ...);
 
 #define HIT_GOOD_TRAP \
 	asm volatile(".byte 0xd6" : : "a" (0))

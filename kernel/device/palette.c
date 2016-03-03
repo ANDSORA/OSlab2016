@@ -277,9 +277,9 @@ void write_palette() {
 	int i;
 	outb(VGA_DAC_WRITE_INDEX, 0);
 	for(i = 0; i < NR_PALETTE_ENTRY; i ++) {
-		outb(VGA_DAC_DATA, palette[(i << 2) + 2] >> 2);	// red
+		outb(VGA_DAC_DATA, palette[(i << 2) + 0] >> 2);	// red
 		outb(VGA_DAC_DATA, palette[(i << 2) + 1] >> 2);	// green
-		outb(VGA_DAC_DATA, palette[(i << 2) + 0] >> 2);	// blue
+		outb(VGA_DAC_DATA, palette[(i << 2) + 2] >> 2);	// blue
 	}
 }
 
