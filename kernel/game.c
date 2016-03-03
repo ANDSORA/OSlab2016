@@ -1,16 +1,28 @@
+#include <include/assert.h>
+
 void init_serial();
-int is_serial_idle();
-void serial_printc(char);
-void serial_output_test();
 void write_palette();
 void init_vmem();
 
-int main(void) {
+void printk_test();
+
+void INIT_WORK(){
 	init_serial();
 	write_palette();
 	init_vmem();
-	//serial_printc('X');
-	serial_output_test();
+}
+
+void TEST_WORK(){
+	printk_test();
+}
+
+int main(void) {
+
+	INIT_WORK();
+
+	TEST_WORK();
+
+	assert(0);
 
 	while(1);
 	return 0;

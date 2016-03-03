@@ -1,5 +1,5 @@
-#include <lib/x86.h>
-#include <lib/elf.h>
+#include <include/x86.h>
+#include <include/elf.h>
 //#include "boot.h"
 
 #define SECTSIZE 512

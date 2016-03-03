@@ -1,4 +1,4 @@
-#include <lib/mmu.h>
+#include <include/mmu.h>
 
 #define GDT_ENTRY(n)	\
 	((n) << 3)

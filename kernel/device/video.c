@@ -1,5 +1,5 @@
-#include <lib/device/video.h>
-#include <lib/logo.h>
+#include <include/device/video.h>
+#include <include/logo.h>
 
 uint8_t *vmem = ((uint8_t*)VMEM_ADDR);
 
