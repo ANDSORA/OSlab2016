@@ -1,6 +1,4 @@
-//#include <lib/stdio.h>
-#include <include/types.h>
-#include <include/stdarg.h>
+#include <include/stdio.h>
 
 void serial_printc(char);
 
