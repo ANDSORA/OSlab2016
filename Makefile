@@ -46,7 +46,8 @@ BOOT_O := $(BOOT_S:%.S=$(OBJ_DIR)/%.o)
 BOOT_O += $(BOOT_C:%.c=$(OBJ_DIR)/%.o)
 
 KERNEL_C := $(shell find $(KERNEL_DIR) -name "*.c")
-KERNEL_S := $(wildcard $(KERNEL_DIR)/*.S)
+KERNEL_S := $(shell find $(KERNEL_DIR) -name "*.S")
+#KERNEL_S := $(wildcard $(KERNEL_DIR)/*.S)
 KERNEL_O := $(KERNEL_C:%.c=$(OBJ_DIR)/%.o)
 KERNEL_O += $(KERNEL_S:%.S=$(OBJ_DIR)/%.o)
 
