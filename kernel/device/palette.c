@@ -1,5 +1,5 @@
-#include "include/x86.h"
-#include "include/types.h"
+#include <include/common.h>
+#include <include/x86.h>
 
 /* some ports */
 #define VGA_DAC_READ_INDEX 0x3C7

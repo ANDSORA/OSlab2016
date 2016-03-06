@@ -35,6 +35,10 @@ static __inline uint32_t read_esp(void) __attribute__((always_inline));
 static __inline void cpuid(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp);
 static __inline uint64_t read_tsc(void) __attribute__((always_inline));
 
+/* sti and cli --ANDSORA */
+static __inline void sti(void) __attribute__((always_inline));
+static __inline void cli(void) __attribute__((always_inline));
+
 static __inline void
 breakpoint(void)
 {
@@ -293,4 +297,17 @@ xchg(volatile uint32_t *addr, uint32_t newval)
 	return result;
 }
 
-#endif /* !JOS_INC_X86_H */
+/* sti and cli --ANDSORA */
+static __inline void
+sti(void)
+{
+	__asm __volatile("sti");
+}
+
+static __inline void
+cli(void)
+{
+	__asm __volatile("cli");
+}
+
+#endif /* __X86_H__ */

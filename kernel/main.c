@@ -1,6 +1,5 @@
-#include <include/assert.h>
+#include <include/common.h>
 #include <include/video_mode.h>
-#include <include/stdio.h>
 
 void init_serial();
 void init_i8259();
@@ -25,12 +24,7 @@ int main(void) {
 
 	//TEST_WORK();
 
-#ifdef __ASSEMBLER__
-	printk("ASSEMBLER\n");
-#else
-	printk("NO ASSEMBLER\n");
-#endif
-
+	//assert(0);
 	while(1);
 	return 0;
 }

@@ -1,3 +1,5 @@
+#include <include/common.h>
+
 int printk(const char *, ...);
 
 void printk_test(){
