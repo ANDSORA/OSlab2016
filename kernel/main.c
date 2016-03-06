@@ -24,7 +24,7 @@ int main(void) {
 
 	//TEST_WORK();
 
-	//assert(0);
+	panic("YOU... DEAD\n");
 	while(1);
 	return 0;
 }
