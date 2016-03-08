@@ -4,6 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Assert	include/assert.h	18;"	d
 BOOT	Makefile	/^BOOT   := boot.bin$/;"	m
 BOOT_C	Makefile	/^BOOT_C := $(wildcard $(BOOT_DIR)\/*.c)$/;"	m
 BOOT_DIR	Makefile	/^BOOT_DIR       := boot$/;"	m
@@ -98,15 +99,16 @@ GateDescriptor::gd_s	include/mmu.h	/^	unsigned gd_s : 1;           \/\/ must be 
 GateDescriptor::gd_sel	include/mmu.h	/^	unsigned gd_sel : 16;        \/\/ segment selector$/;"	m	struct:GateDescriptor	access:public
 GateDescriptor::gd_type	include/mmu.h	/^	unsigned gd_type : 4;        \/\/ type(STS_{TG,IG32,TG32})$/;"	m	struct:GateDescriptor	access:public
 Gatedesc	include/mmu.h	/^} Gatedesc;$/;"	t	typeref:struct:GateDescriptor
-HIT_BAD_TRAP	include/assert.h	9;"	d
-HIT_GOOD_TRAP	include/assert.h	6;"	d
 IMAGE	Makefile	/^IMAGE  := disk.bin$/;"	m
 INIT_WORK	kernel/main.c	/^void INIT_WORK(){$/;"	f
 INTERRUPT_GATE_32	kernel/irq/idt.c	5;"	d	file:
 IRQ_OFFSET	kernel/irq/i8259.c	5;"	d	file:
 IRQ_SLAVE	kernel/irq/i8259.c	6;"	d	file:
+IRQ_t	cache/irq_handle.c	/^struct IRQ_t {$/;"	s	file:
 IRQ_t	kernel/irq/irq_handle.c	/^struct IRQ_t {$/;"	s	file:
+IRQ_t::next	cache/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
 IRQ_t::next	kernel/irq/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
+IRQ_t::routine	cache/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
 IRQ_t::routine	kernel/irq/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
 KERNEL	Makefile	/^KERNEL := kernel.bin$/;"	m
 KERNEL_C	Makefile	/^KERNEL_C := $(shell find $(KERNEL_DIR) -name "*.c")$/;"	m
@@ -156,8 +158,10 @@ ModeInfoBlock::winB	include/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:M
 ModeInfoBlock::winsize	include/video_mode.h	/^	uint16_t winsize;$/;"	m	struct:ModeInfoBlock	access:public
 NPDENTRIES	include/mmu.h	45;"	d
 NPTENTRIES	include/mmu.h	46;"	d
-NR_HARD_INTR	kernel/irq/irq_handle.c	6;"	d	file:
+NR_HARD_INTR	cache/irq_handle.c	7;"	d	file:
+NR_HARD_INTR	kernel/irq/irq_handle.c	4;"	d	file:
 NR_IRQ	kernel/irq/idt.c	7;"	d	file:
+NR_IRQ_HANDLE	cache/irq_handle.c	4;"	d	file:
 NR_IRQ_HANDLE	kernel/irq/irq_handle.c	3;"	d	file:
 NR_PALETTE_ENTRY	kernel/device/palette.c	10;"	d	file:
 NR_SEGMENTS	include/mmu.h	140;"	d
@@ -357,6 +361,7 @@ Xres	include/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	acc
 Ychar	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
 Yres	include/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
 __ASSERT_H__	include/assert.h	2;"	d
+__COMMON__	include/common.h	2;"	d
 __ELF_H__	include/elf.h	2;"	d
 __IRQ_H__	include/irq.h	2;"	d
 __MMU_H__	include/mmu.h	2;"	d
@@ -366,9 +371,11 @@ __STDIO_H__	include/stdio.h	2;"	d
 __TYPES_H__	include/types.h	2;"	d
 __VIDEO_H__	include/device/video.h	2;"	d
 __X86_H__	include/x86.h	2;"	d
-add_irq_handle	kernel/irq/irq_handle.c	/^add_irq_handle(int irq, void (*func)(void) ) {$/;"	f	signature:(int irq, void (*func)(void) )
+abort	include/assert.h	/^int abort(const char *, int);$/;"	p	signature:(const char *, int)
+abort	lib/abort.c	/^int abort(const char* filename, int line) {$/;"	f	signature:(const char* filename, int line)
+add_irq_handle	cache/irq_handle.c	/^add_irq_handle(int irq, void (*func)(void) ) {$/;"	f	signature:(int irq, void (*func)(void) )
 asm_do_irq	kernel/irq/do_irq.S	/^asm_do_irq:$/;"	l
-assert	include/assert.h	12;"	d
+assert	include/assert.h	15;"	d
 attributes	include/video_mode.h	/^	uint16_t attributes;$/;"	m	struct:ModeInfoBlock	access:public
 bank_size	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
 banks	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
@@ -379,11 +386,13 @@ bootmain	boot/boot.c	/^int bootmain(void)$/;"	f	signature:(void)
 bpp	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
 breakpoint	include/x86.h	/^breakpoint(void)$/;"	f	signature:(void)
 breakpoint	include/x86.h	/^static __inline void breakpoint(void) __attribute__((always_inline));$/;"	p	signature:(void)
+cli	include/x86.h	/^cli(void)$/;"	f	signature:(void)
+cli	include/x86.h	/^static __inline void cli(void) __attribute__((always_inline));$/;"	p	signature:(void)
 cpuid	include/x86.h	/^cpuid(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp)$/;"	f	signature:(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp)
 cpuid	include/x86.h	/^static __inline void cpuid(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp);$/;"	p	signature:(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp)
 cs	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"	m	struct:TrapFrame	access:public
 directcolor_attributes	include/video_mode.h	/^	uint8_t directcolor_attributes;$/;"	m	struct:ModeInfoBlock	access:public
-do_syscall	kernel/irq/irq_handle.c	/^void do_syscall(TrapFrame *);$/;"	p	file:	signature:(TrapFrame *)
+do_syscall	cache/irq_handle.c	/^void do_syscall(TrapFrame *);$/;"	p	file:	signature:(TrapFrame *)
 e_ehsize	include/elf.h	/^	uint16_t e_ehsize;$/;"	m	struct:Elf	access:public
 e_elf	include/elf.h	/^	uint8_t e_elf[12];$/;"	m	struct:Elf	access:public
 e_entry	include/elf.h	/^	uint32_t e_entry;$/;"	m	struct:Elf	access:public
@@ -425,9 +434,9 @@ gdtdesc	boot/start.S	/^gdtdesc:$/;"	l
 granularity	include/video_mode.h	/^	uint16_t granularity;$/;"	m	struct:ModeInfoBlock	access:public
 green_mask	include/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
 green_position	include/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
-handle_count	kernel/irq/irq_handle.c	/^static int handle_count = 0;$/;"	v	file:
-handle_pool	kernel/irq/irq_handle.c	/^static struct IRQ_t handle_pool[NR_IRQ_HANDLE];$/;"	v	typeref:struct:IRQ_t	file:
-handles	kernel/irq/irq_handle.c	/^static struct IRQ_t *handles[NR_HARD_INTR];$/;"	v	typeref:struct:IRQ_t	file:
+handle_count	cache/irq_handle.c	/^static int handle_count = 0;$/;"	v	file:
+handle_pool	cache/irq_handle.c	/^static struct IRQ_t handle_pool[NR_IRQ_HANDLE];$/;"	v	typeref:struct:IRQ_t	file:
+handles	cache/irq_handle.c	/^static struct IRQ_t *handles[NR_HARD_INTR];$/;"	v	typeref:struct:IRQ_t	file:
 idt	kernel/irq/idt.c	/^static Gatedesc idt[NR_IRQ];$/;"	v	file:
 image_pages	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
 inb	include/x86.h	/^inb(int port)$/;"	f	signature:(int port)
@@ -462,7 +471,7 @@ irq1	kernel/irq/idt.c	/^void irq1();$/;"	p	file:
 irq14	kernel/irq/idt.c	/^void irq14();$/;"	p	file:
 irq_empty	kernel/irq/do_irq.S	/^			irq_empty:	pushl $0;  pushl   $-1; jmp asm_do_irq$/;"	l
 irq_empty	kernel/irq/idt.c	/^void irq_empty();$/;"	p	file:
-irq_handle	kernel/irq/irq_handle.c	/^void irq_handle(TrapFrame *tf) {$/;"	f	signature:(TrapFrame *tf)
+irq_handle	cache/irq_handle.c	/^void irq_handle(TrapFrame *tf) {$/;"	f	signature:(TrapFrame *tf)
 is_serial_idle	lib/serial.c	/^int is_serial_idle() {$/;"	f
 lcr0	include/x86.h	/^lcr0(uint32_t val)$/;"	f	signature:(uint32_t val)
 lcr0	include/x86.h	/^static __inline void lcr0(uint32_t val) __attribute__((always_inline));$/;"	p	signature:(uint32_t val)
@@ -480,6 +489,7 @@ ltr	include/x86.h	/^static __inline void ltr(uint16_t sel) __attribute__((always
 main	kernel/main.c	/^int main(void) {$/;"	f	signature:(void)
 memory_model	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
 myread	tools/Image2Lcd.sh	/^myread() {$/;"	f
+next	cache/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
 next	kernel/irq/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
 off_t	include/types.h	/^typedef int32_t off_t;$/;"	t
 offsetof	include/types.h	71;"	d
@@ -509,6 +519,7 @@ p_pa	include/elf.h	/^	uint32_t p_pa;$/;"	m	struct:Proghdr	access:public
 p_type	include/elf.h	/^	uint32_t p_type;$/;"	m	struct:Proghdr	access:public
 p_va	include/elf.h	/^	uint32_t p_va;$/;"	m	struct:Proghdr	access:public
 palette	kernel/device/palette.c	/^static uint8_t palette[NR_PALETTE_ENTRY * 4] = {$/;"	v	file:
+panic	include/assert.h	26;"	d
 pd_base	include/mmu.h	/^	uint32_t pd_base;		\/\/ Base address$/;"	m	struct:Pseudodesc	access:public
 pd_lim	include/mmu.h	/^	uint16_t pd_lim;		\/\/ Limit$/;"	m	struct:Pseudodesc	access:public
 physaddr_t	include/types.h	/^typedef uint32_t physaddr_t;$/;"	t
@@ -549,6 +560,7 @@ red_position	include/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struc
 reserved0	include/video_mode.h	/^	uint8_t reserved0;$/;"	m	struct:ModeInfoBlock	access:public
 reserved1	include/video_mode.h	/^	uint32_t reserved1;$/;"	m	struct:ModeInfoBlock	access:public
 reserved2	include/video_mode.h	/^	uint16_t reserved2;$/;"	m	struct:ModeInfoBlock	access:public
+routine	cache/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
 routine	kernel/irq/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
 rsv_mask	include/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
 rsv_position	include/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
@@ -586,6 +598,8 @@ size_t	include/types.h	/^typedef uint32_t size_t;$/;"	t
 ssize_t	include/types.h	/^typedef int32_t ssize_t;$/;"	t
 start	boot/start.S	/^start:$/;"	l
 start32	boot/start.S	/^start32:$/;"	l
+sti	include/x86.h	/^static __inline void sti(void) __attribute__((always_inline));$/;"	p	signature:(void)
+sti	include/x86.h	/^sti(void)$/;"	f	signature:(void)
 tlbflush	include/x86.h	/^static __inline void tlbflush(void) __attribute__((always_inline));$/;"	p	signature:(void)
 tlbflush	include/x86.h	/^tlbflush(void)$/;"	f	signature:(void)
 true	include/types.h	/^enum { false, true };$/;"	e	enum:__anon1

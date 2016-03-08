@@ -38,6 +38,7 @@ static __inline uint64_t read_tsc(void) __attribute__((always_inline));
 /* sti and cli --ANDSORA */
 static __inline void sti(void) __attribute__((always_inline));
 static __inline void cli(void) __attribute__((always_inline));
+static __inline void hlt(void) __attribute__((always_inline));
 
 static __inline void
 breakpoint(void)
@@ -308,6 +309,12 @@ static __inline void
 cli(void)
 {
 	__asm __volatile("cli");
+}
+
+static __inline void
+hlt(void)
+{
+	__asm __volatile("hlt");
 }
 
 #endif /* __X86_H__ */

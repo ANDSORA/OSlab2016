@@ -7,7 +7,7 @@
 #define NR_IRQ				256
 
 /* Each entry of the IDT is either an interrupt gate, or a trap gate */
-static Gatedesc idt[NR_IRQ];
+Gatedesc idt[NR_IRQ];
 
 /* Setup a interrupt gate for interrupt handler. */
 static void set_intr(Gatedesc *ptr, uint32_t selector, uint32_t offset, uint32_t dpl) {
@@ -39,7 +39,7 @@ static void write_idtr(void *addr, uint32_t size) {
 	static volatile uint16_t data[3];
 	data[0] = size - 1;
 	data[1] = (uint32_t)addr;
-	data[2] = ((uint32_t)addr >> 16);
+	data[2] = ((uint32_t)addr) >> 16;
 	lidt((void*)data);
 }
 
@@ -89,9 +89,9 @@ void init_idt() {
 	/* the system call 0x80 */
 	set_trap(idt + 0x80, SEG_KERNEL_CODE << 3, (uint32_t)vecsys, DPL_USER);
 
-	set_intr(idt+32 + 0, SEG_KERNEL_CODE << 3, (uint32_t)irq0, DPL_KERNEL);
-	set_intr(idt+32 + 1, SEG_KERNEL_CODE << 3, (uint32_t)irq1, DPL_KERNEL);
-	set_intr(idt+32 + 14, SEG_KERNEL_CODE << 3, (uint32_t)irq14, DPL_KERNEL);
+	set_intr(idt + 32 + 0, SEG_KERNEL_CODE << 3, (uint32_t)irq0, DPL_KERNEL);
+	set_intr(idt + 32 + 1, SEG_KERNEL_CODE << 3, (uint32_t)irq1, DPL_KERNEL);
+	set_intr(idt + 32 + 14, SEG_KERNEL_CODE << 3, (uint32_t)irq14, DPL_KERNEL);
 
 	/* the ``idt'' is its virtual address */
 	write_idtr(idt, sizeof(idt));
