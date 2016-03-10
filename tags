@@ -4,6 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ASM	lib/string.c	9;"	d	file:
 Assert	include/assert.h	18;"	d
 BOOT	Makefile	/^BOOT   := boot.bin$/;"	m
 BOOT_C	Makefile	/^BOOT_C := $(wildcard $(BOOT_DIR)\/*.c)$/;"	m
@@ -30,7 +31,13 @@ CR4_PSE	include/mmu.h	93;"	d
 CR4_PVI	include/mmu.h	96;"	d
 CR4_TSD	include/mmu.h	95;"	d
 CR4_VME	include/mmu.h	97;"	d
-Capabilities	include/video_mode.h	/^	uint8_t Capabilities[4];$/;"	m	struct:VbeInfoBlock	access:public
+Capabilities	include/device/video_mode.h	/^	uint8_t Capabilities[4];$/;"	m	struct:VbeInfoBlock	access:public
+CmdByte	kernel/game/lib/timer.c	/^union CmdByte {$/;"	u	file:
+CmdByte::__anon1::access_mode	kernel/game/lib/timer.c	/^		uint8_t access_mode  : 2;$/;"	m	struct:CmdByte::__anon1	file:	access:public
+CmdByte::__anon1::channel	kernel/game/lib/timer.c	/^		uint8_t channel      : 2;$/;"	m	struct:CmdByte::__anon1	file:	access:public
+CmdByte::__anon1::operate_mode	kernel/game/lib/timer.c	/^		uint8_t operate_mode : 3;$/;"	m	struct:CmdByte::__anon1	file:	access:public
+CmdByte::__anon1::present_mode	kernel/game/lib/timer.c	/^		uint8_t present_mode : 1;$/;"	m	struct:CmdByte::__anon1	file:	access:public
+CmdByte::val	kernel/game/lib/timer.c	/^	uint8_t val;$/;"	m	union:CmdByte	file:	access:public
 DD	Makefile	/^DD      := dd$/;"	m
 DEPS	Makefile	/^DEPS := $(shell find -name "*.d")$/;"	m
 DPL_KERNEL	include/mmu.h	133;"	d
@@ -61,9 +68,18 @@ Elf::e_shoff	include/elf.h	/^	uint32_t e_shoff;$/;"	m	struct:Elf	access:public
 Elf::e_shstrndx	include/elf.h	/^	uint16_t e_shstrndx;$/;"	m	struct:Elf	access:public
 Elf::e_type	include/elf.h	/^	uint16_t e_type;$/;"	m	struct:Elf	access:public
 Elf::e_version	include/elf.h	/^	uint32_t e_version;$/;"	m	struct:Elf	access:public
+Enemy	kernel/game/src/effect.c	/^struct Enemy {$/;"	s	file:
+Enemy::h	kernel/game/src/effect.c	/^	int w, h;$/;"	m	struct:Enemy	file:	access:public
+Enemy::next	kernel/game/src/effect.c	/^	struct Enemy *next;$/;"	m	struct:Enemy	typeref:struct:Enemy::Enemy	file:	access:public
+Enemy::w	kernel/game/src/effect.c	/^	int w, h;$/;"	m	struct:Enemy	file:	access:public
+Enemy::x	kernel/game/src/effect.c	/^	int x, y;$/;"	m	struct:Enemy	file:	access:public
+Enemy::y	kernel/game/src/effect.c	/^	int x, y;$/;"	m	struct:Enemy	file:	access:public
 FEC_PR	include/mmu.h	123;"	d
 FEC_U	include/mmu.h	125;"	d
 FEC_WR	include/mmu.h	124;"	d
+FF_HEIGHT	include/device/video.h	17;"	d
+FF_WIDTH	include/device/video.h	16;"	d
+FF_WIDTH_SIZE	include/device/video.h	18;"	d
 FL_AC	include/mmu.h	117;"	d
 FL_AF	include/mmu.h	102;"	d
 FL_CF	include/mmu.h	100;"	d
@@ -99,71 +115,161 @@ GateDescriptor::gd_s	include/mmu.h	/^	unsigned gd_s : 1;           \/\/ must be 
 GateDescriptor::gd_sel	include/mmu.h	/^	unsigned gd_sel : 16;        \/\/ segment selector$/;"	m	struct:GateDescriptor	access:public
 GateDescriptor::gd_type	include/mmu.h	/^	unsigned gd_type : 4;        \/\/ type(STS_{TG,IG32,TG32})$/;"	m	struct:GateDescriptor	access:public
 Gatedesc	include/mmu.h	/^} Gatedesc;$/;"	t	typeref:struct:GateDescriptor
+HZ	kernel/game/lib/timer.c	7;"	d	file:
 IMAGE	Makefile	/^IMAGE  := disk.bin$/;"	m
 INIT_WORK	kernel/main.c	/^void INIT_WORK(){$/;"	f
 INTERRUPT_GATE_32	kernel/irq/idt.c	5;"	d	file:
 IRQ_OFFSET	kernel/irq/i8259.c	5;"	d	file:
 IRQ_SLAVE	kernel/irq/i8259.c	6;"	d	file:
-IRQ_t	cache/irq_handle.c	/^struct IRQ_t {$/;"	s	file:
 IRQ_t	kernel/irq/irq_handle.c	/^struct IRQ_t {$/;"	s	file:
-IRQ_t::next	cache/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
 IRQ_t::next	kernel/irq/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
-IRQ_t::routine	cache/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
 IRQ_t::routine	kernel/irq/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
 KERNEL	Makefile	/^KERNEL := kernel.bin$/;"	m
 KERNEL_C	Makefile	/^KERNEL_C := $(shell find $(KERNEL_DIR) -name "*.c")$/;"	m
 KERNEL_DIR	Makefile	/^KERNEL_DIR     := kernel$/;"	m
 KERNEL_O	Makefile	/^KERNEL_O := $(KERNEL_C:%.c=$(OBJ_DIR)\/%.o)$/;"	m
 KERNEL_S	Makefile	/^KERNEL_S := $(shell find $(KERNEL_DIR) -name "*.S")$/;"	m
+KEY_STATE_EMPTY	kernel/game/lib/keyboard.c	/^enum {KEY_STATE_EMPTY, KEY_STATE_WAIT_RELEASE, KEY_STATE_RELEASE, KEY_STATE_PRESS};$/;"	e	enum:__anon2	file:
+KEY_STATE_PRESS	kernel/game/lib/keyboard.c	/^enum {KEY_STATE_EMPTY, KEY_STATE_WAIT_RELEASE, KEY_STATE_RELEASE, KEY_STATE_PRESS};$/;"	e	enum:__anon2	file:
+KEY_STATE_RELEASE	kernel/game/lib/keyboard.c	/^enum {KEY_STATE_EMPTY, KEY_STATE_WAIT_RELEASE, KEY_STATE_RELEASE, KEY_STATE_PRESS};$/;"	e	enum:__anon2	file:
+KEY_STATE_WAIT_RELEASE	kernel/game/lib/keyboard.c	/^enum {KEY_STATE_EMPTY, KEY_STATE_WAIT_RELEASE, KEY_STATE_RELEASE, KEY_STATE_PRESS};$/;"	e	enum:__anon2	file:
+K_A	include/device/scan_code.h	32;"	d
+K_B	include/device/scan_code.h	52;"	d
+K_BACKSLASH	include/device/scan_code.h	46;"	d
+K_BACKSPACE	include/device/scan_code.h	15;"	d
+K_C	include/device/scan_code.h	49;"	d
+K_CAPS	include/device/scan_code.h	62;"	d
+K_COMMA	include/device/scan_code.h	55;"	d
+K_D	include/device/scan_code.h	35;"	d
+K_DOT	include/device/scan_code.h	56;"	d
+K_DOWN	include/device/scan_code.h	86;"	d
+K_E	include/device/scan_code.h	20;"	d
+K_ENTER	include/device/scan_code.h	30;"	d
+K_ERROR	include/device/scan_code.h	1;"	d
+K_ESC	include/device/scan_code.h	2;"	d
+K_F	include/device/scan_code.h	36;"	d
+K_F1	include/device/scan_code.h	63;"	d
+K_F10	include/device/scan_code.h	73;"	d
+K_F2	include/device/scan_code.h	64;"	d
+K_F3	include/device/scan_code.h	65;"	d
+K_F4	include/device/scan_code.h	66;"	d
+K_F5	include/device/scan_code.h	67;"	d
+K_F6	include/device/scan_code.h	69;"	d
+K_F7	include/device/scan_code.h	70;"	d
+K_F8	include/device/scan_code.h	71;"	d
+K_F9	include/device/scan_code.h	72;"	d
+K_G	include/device/scan_code.h	37;"	d
+K_H	include/device/scan_code.h	38;"	d
+K_I	include/device/scan_code.h	25;"	d
+K_J	include/device/scan_code.h	39;"	d
+K_K	include/device/scan_code.h	40;"	d
+K_L	include/device/scan_code.h	41;"	d
+K_LEFT	include/device/scan_code.h	80;"	d
+K_L_ALT	include/device/scan_code.h	60;"	d
+K_L_BRACKET	include/device/scan_code.h	28;"	d
+K_L_CTRL	include/device/scan_code.h	31;"	d
+K_L_SHIFT	include/device/scan_code.h	45;"	d
+K_M	include/device/scan_code.h	54;"	d
+K_N	include/device/scan_code.h	53;"	d
+K_NUMLOCK	include/device/scan_code.h	74;"	d
+K_O	include/device/scan_code.h	26;"	d
+K_P	include/device/scan_code.h	27;"	d
+K_PAGEDOWN	include/device/scan_code.h	87;"	d
+K_PAGEUP	include/device/scan_code.h	78;"	d
+K_Q	include/device/scan_code.h	18;"	d
+K_QUOTE	include/device/scan_code.h	43;"	d
+K_R	include/device/scan_code.h	21;"	d
+K_RIGHT	include/device/scan_code.h	82;"	d
+K_R_0	include/device/scan_code.h	88;"	d
+K_R_1	include/device/scan_code.h	84;"	d
+K_R_5	include/device/scan_code.h	81;"	d
+K_R_7	include/device/scan_code.h	76;"	d
+K_R_ALT	include/device/scan_code.h	90;"	d
+K_R_BRACKET	include/device/scan_code.h	29;"	d
+K_R_DOT	include/device/scan_code.h	89;"	d
+K_R_MINUS	include/device/scan_code.h	79;"	d
+K_R_PLUS	include/device/scan_code.h	83;"	d
+K_R_SHIFT	include/device/scan_code.h	58;"	d
+K_R_STAR	include/device/scan_code.h	59;"	d
+K_S	include/device/scan_code.h	33;"	d
+K_SCROLL	include/device/scan_code.h	75;"	d
+K_SEMICOLON	include/device/scan_code.h	42;"	d
+K_SLASH	include/device/scan_code.h	57;"	d
+K_SPACE	include/device/scan_code.h	61;"	d
+K_T	include/device/scan_code.h	22;"	d
+K_TAB	include/device/scan_code.h	16;"	d
+K_TILDE	include/device/scan_code.h	44;"	d
+K_U	include/device/scan_code.h	24;"	d
+K_UP	include/device/scan_code.h	77;"	d
+K_UP_0	include/device/scan_code.h	12;"	d
+K_UP_1	include/device/scan_code.h	3;"	d
+K_UP_2	include/device/scan_code.h	4;"	d
+K_UP_3	include/device/scan_code.h	5;"	d
+K_UP_4	include/device/scan_code.h	6;"	d
+K_UP_5	include/device/scan_code.h	7;"	d
+K_UP_6	include/device/scan_code.h	8;"	d
+K_UP_7	include/device/scan_code.h	9;"	d
+K_UP_8	include/device/scan_code.h	10;"	d
+K_UP_9	include/device/scan_code.h	11;"	d
+K_UP_MINUS	include/device/scan_code.h	13;"	d
+K_UP_PLUS	include/device/scan_code.h	14;"	d
+K_V	include/device/scan_code.h	50;"	d
+K_W	include/device/scan_code.h	19;"	d
+K_X	include/device/scan_code.h	48;"	d
+K_Y	include/device/scan_code.h	23;"	d
+K_Z	include/device/scan_code.h	47;"	d
 LD	Makefile	/^LD      := ld$/;"	m
 LD_SCRIPT	Makefile	/^LD_SCRIPT := $(shell find $(KERNEL_DIR) -name "*.ld")$/;"	m
 LIB_C	Makefile	/^LIB_C := $(wildcard $(LIB_DIR)\/*.c)$/;"	m
 LIB_DIR	Makefile	/^LIB_DIR        := lib$/;"	m
 LIB_O	Makefile	/^LIB_O := $(LIB_C:%.c=$(OBJ_DIR)\/%.o)$/;"	m
+LS_HEIGHT	include/device/video.h	14;"	d
+LS_WIDTH	include/device/video.h	13;"	d
+LS_WIDTH_SIZE	include/device/video.h	15;"	d
 MAX	include/types.h	49;"	d
 MIN	include/types.h	43;"	d
-ModeInfoBlock	include/video_mode.h	/^struct ModeInfoBlock {$/;"	s
-ModeInfoBlock::VBE_FAR	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::Wchar	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::Xres	include/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::Ychar	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::Yres	include/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::attributes	include/video_mode.h	/^	uint16_t attributes;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::bank_size	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::banks	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::blue_mask	include/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::blue_position	include/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::bpp	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::directcolor_attributes	include/video_mode.h	/^	uint8_t directcolor_attributes;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::granularity	include/video_mode.h	/^	uint16_t granularity;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::green_mask	include/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::green_position	include/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::image_pages	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::memory_model	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::physbase	include/video_mode.h	/^	uint32_t physbase;  \/\/ your LFB (Linear Framebuffer) address ;)$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::pitch	include/video_mode.h	/^	uint16_t pitch; \/\/ bytes per scanline$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::planes	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::realFctPtr	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::red_mask	include/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::red_position	include/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::reserved0	include/video_mode.h	/^	uint8_t reserved0;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::reserved1	include/video_mode.h	/^	uint32_t reserved1;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::reserved2	include/video_mode.h	/^	uint16_t reserved2;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::rsv_mask	include/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::rsv_position	include/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::segmentA	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::segmentB	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::winA	include/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::winB	include/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
-ModeInfoBlock::winsize	include/video_mode.h	/^	uint16_t winsize;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock	include/device/video_mode.h	/^struct ModeInfoBlock {$/;"	s
+ModeInfoBlock::VBE_FAR	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::Wchar	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::Xres	include/device/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::Ychar	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::Yres	include/device/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::attributes	include/device/video_mode.h	/^	uint16_t attributes;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::bank_size	include/device/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::banks	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::blue_mask	include/device/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::blue_position	include/device/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::bpp	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::directcolor_attributes	include/device/video_mode.h	/^	uint8_t directcolor_attributes;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::granularity	include/device/video_mode.h	/^	uint16_t granularity;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::green_mask	include/device/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::green_position	include/device/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::image_pages	include/device/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::memory_model	include/device/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::physbase	include/device/video_mode.h	/^	uint32_t physbase;  \/\/ your LFB (Linear Framebuffer) address ;)$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::pitch	include/device/video_mode.h	/^	uint16_t pitch; \/\/ bytes per scanline$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::planes	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::realFctPtr	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::red_mask	include/device/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::red_position	include/device/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::reserved0	include/device/video_mode.h	/^	uint8_t reserved0;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::reserved1	include/device/video_mode.h	/^	uint32_t reserved1;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::reserved2	include/device/video_mode.h	/^	uint16_t reserved2;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::rsv_mask	include/device/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::rsv_position	include/device/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::segmentA	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::segmentB	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::winA	include/device/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::winB	include/device/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
+ModeInfoBlock::winsize	include/device/video_mode.h	/^	uint16_t winsize;$/;"	m	struct:ModeInfoBlock	access:public
 NPDENTRIES	include/mmu.h	45;"	d
 NPTENTRIES	include/mmu.h	46;"	d
-NR_HARD_INTR	cache/irq_handle.c	7;"	d	file:
-NR_HARD_INTR	kernel/irq/irq_handle.c	4;"	d	file:
+NR_ENEMY	kernel/game/src/effect.c	8;"	d	file:
+NR_HARD_INTR	kernel/irq/irq_handle.c	5;"	d	file:
 NR_IRQ	kernel/irq/idt.c	7;"	d	file:
-NR_IRQ_HANDLE	cache/irq_handle.c	4;"	d	file:
-NR_IRQ_HANDLE	kernel/irq/irq_handle.c	3;"	d	file:
-NR_PALETTE_ENTRY	kernel/device/palette.c	10;"	d	file:
+NR_IRQ_HANDLE	kernel/irq/irq_handle.c	4;"	d	file:
+NR_KEYS	kernel/game/lib/keyboard.c	5;"	d	file:
+NR_PALETTE_ENTRY	cache/palette.c	10;"	d	file:
 NR_SEGMENTS	include/mmu.h	140;"	d
 NULL	include/types.h	5;"	d
 OBJCOPY	Makefile	/^OBJCOPY := objcopy$/;"	m
@@ -171,7 +277,7 @@ OBJ_BOOT_DIR	Makefile	/^OBJ_BOOT_DIR   := $(OBJ_DIR)\/$(BOOT_DIR)$/;"	m
 OBJ_DIR	Makefile	/^OBJ_DIR        := obj$/;"	m
 OBJ_KERNEL_DIR	Makefile	/^OBJ_KERNEL_DIR := $(OBJ_DIR)\/$(KERNEL_DIR)$/;"	m
 OBJ_LIB_DIR	Makefile	/^OBJ_LIB_DIR    := $(OBJ_DIR)\/$(LIB_DIR)$/;"	m
-OemStringPtr	include/video_mode.h	/^	uint16_t OemStringPtr[2];            \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
+OemStringPtr	include/device/video_mode.h	/^	uint16_t OemStringPtr[2];            \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
 PDX	include/mmu.h	33;"	d
 PDXSHIFT	include/mmu.h	55;"	d
 PGADDR	include/mmu.h	42;"	d
@@ -179,7 +285,10 @@ PGNUM	include/mmu.h	30;"	d
 PGOFF	include/mmu.h	39;"	d
 PGSHIFT	include/mmu.h	49;"	d
 PGSIZE	include/mmu.h	48;"	d
+PIT_FREQUENCE	kernel/game/lib/timer.c	6;"	d	file:
 PORT	lib/serial.c	3;"	d	file:
+PORT_CH_0	kernel/game/lib/timer.c	4;"	d	file:
+PORT_CMD	kernel/game/lib/timer.c	5;"	d	file:
 PORT_PIC_MASTER	kernel/irq/i8259.c	3;"	d	file:
 PORT_PIC_SLAVE	kernel/irq/i8259.c	4;"	d	file:
 PTE_A	include/mmu.h	63;"	d
@@ -198,6 +307,11 @@ PTSHIFT	include/mmu.h	52;"	d
 PTSIZE	include/mmu.h	51;"	d
 PTX	include/mmu.h	36;"	d
 PTXSHIFT	include/mmu.h	54;"	d
+Pixels	include/device/video.h	/^union Pixels {$/;"	u
+Pixels::RGB_array	include/device/video.h	/^	uint8_t RGB_array[3];$/;"	m	union:Pixels	access:public
+Pixels::__anon3::blue	include/device/video.h	/^		uint8_t blue;$/;"	m	struct:Pixels::__anon3	access:public
+Pixels::__anon3::green	include/device/video.h	/^		uint8_t green;$/;"	m	struct:Pixels::__anon3	access:public
+Pixels::__anon3::red	include/device/video.h	/^		uint8_t red;$/;"	m	struct:Pixels::__anon3	access:public
 Proghdr	include/elf.h	/^struct Proghdr {$/;"	s
 Proghdr::p_align	include/elf.h	/^	uint32_t p_align;$/;"	m	struct:Proghdr	access:public
 Proghdr::p_filesz	include/elf.h	/^	uint32_t p_filesz;$/;"	m	struct:Proghdr	access:public
@@ -213,12 +327,14 @@ Pseudodesc::pd_lim	include/mmu.h	/^	uint16_t pd_lim;		\/\/ Limit$/;"	m	struct:Ps
 QEMU	Makefile	/^QEMU    := qemu-system-i386$/;"	m
 QEMU_DEBUG_OPTIONS	Makefile	/^QEMU_DEBUG_OPTIONS := -S #启动不执行$/;"	m
 QEMU_OPTIONS	Makefile	/^QEMU_OPTIONS := -serial stdio #以标准输入输为串口(COM1)$/;"	m
+RGB_array	include/device/video.h	/^	uint8_t RGB_array[3];$/;"	m	union:Pixels	access:public
 ROUNDDOWN	include/types.h	58;"	d
 ROUNDUP	include/types.h	64;"	d
 SCR_DEPTH	include/device/video.h	8;"	d
 SCR_HEIGHT	include/device/video.h	7;"	d
-SCR_SIZE	include/device/video.h	9;"	d
+SCR_SIZE	include/device/video.h	10;"	d
 SCR_WIDTH	include/device/video.h	6;"	d
+SCR_WIDTH_SIZE	include/device/video.h	9;"	d
 SECTSIZE	boot/boot.c	5;"	d	file:
 SEG	include/mmu.h	164;"	d
 SEG	include/mmu.h	195;"	d
@@ -284,6 +400,12 @@ SegmentDescriptor::sd_p	include/mmu.h	/^	unsigned sd_p : 1;          \/\/ Presen
 SegmentDescriptor::sd_rsv1	include/mmu.h	/^	unsigned sd_rsv1 : 1;       \/\/ Reserved$/;"	m	struct:SegmentDescriptor	access:public
 SegmentDescriptor::sd_s	include/mmu.h	/^	unsigned sd_s : 1;          \/\/ 0 = system, 1 = application$/;"	m	struct:SegmentDescriptor	access:public
 SegmentDescriptor::sd_type	include/mmu.h	/^	unsigned sd_type : 4;       \/\/ Segment type (see STS_ constants)$/;"	m	struct:SegmentDescriptor	access:public
+Surface	include/device/video.h	/^struct Surface {$/;"	s
+Surface::h	include/device/video.h	/^	int w, h;$/;"	m	struct:Surface	access:public
+Surface::pixels	include/device/video.h	/^	uint8_t *pixels;$/;"	m	struct:Surface	access:public
+Surface::w	include/device/video.h	/^	int w, h;$/;"	m	struct:Surface	access:public
+Surface::x	include/device/video.h	/^	int x, y;$/;"	m	struct:Surface	access:public
+Surface::y	include/device/video.h	/^	int x, y;$/;"	m	struct:Surface	access:public
 TEST_WORK	kernel/main.c	/^void TEST_WORK(){$/;"	f
 TRAP_GATE_32	kernel/irq/idt.c	6;"	d	file:
 Taskstate	include/mmu.h	/^} Taskstate;$/;"	t	typeref:struct:TaskstateSegment
@@ -325,7 +447,7 @@ TaskstateSegment::ts_ss0	include/mmu.h	/^	uint16_t ts_ss0;	\/\/   after an incre
 TaskstateSegment::ts_ss1	include/mmu.h	/^	uint16_t ts_ss1;$/;"	m	struct:TaskstateSegment	access:public
 TaskstateSegment::ts_ss2	include/mmu.h	/^	uint16_t ts_ss2;$/;"	m	struct:TaskstateSegment	access:public
 TaskstateSegment::ts_t	include/mmu.h	/^	uint16_t ts_t;		\/\/ Trap on task switch$/;"	m	struct:TaskstateSegment	access:public
-TotalMemory	include/video_mode.h	/^	uint16_t TotalMemory;             \/\/ as # of 64KB blocks$/;"	m	struct:VbeInfoBlock	access:public
+TotalMemory	include/device/video_mode.h	/^	uint16_t TotalMemory;             \/\/ as # of 64KB blocks$/;"	m	struct:VbeInfoBlock	access:public
 TrapFrame	include/irq.h	/^typedef struct TrapFrame {$/;"	s
 TrapFrame	include/irq.h	/^} TrapFrame;$/;"	t	typeref:struct:TrapFrame
 TrapFrame::cs	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"	m	struct:TrapFrame	access:public
@@ -341,58 +463,77 @@ TrapFrame::error_code	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"
 TrapFrame::esi	include/irq.h	/^	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame	access:public
 TrapFrame::irq	include/irq.h	/^	int32_t irq;$/;"	m	struct:TrapFrame	access:public
 TrapFrame::old_esp	include/irq.h	/^	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame	access:public
-VBE_FAR	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
-VGA_DAC_DATA	kernel/device/palette.c	7;"	d	file:
-VGA_DAC_READ_INDEX	kernel/device/palette.c	5;"	d	file:
-VGA_DAC_WRITE_INDEX	kernel/device/palette.c	6;"	d	file:
-VMEM_ADDR	include/device/video.h	10;"	d
-VbeInfoBlock	include/video_mode.h	/^struct VbeInfoBlock {$/;"	s
-VbeInfoBlock::Capabilities	include/video_mode.h	/^	uint8_t Capabilities[4];$/;"	m	struct:VbeInfoBlock	access:public
-VbeInfoBlock::OemStringPtr	include/video_mode.h	/^	uint16_t OemStringPtr[2];            \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
-VbeInfoBlock::TotalMemory	include/video_mode.h	/^	uint16_t TotalMemory;             \/\/ as # of 64KB blocks$/;"	m	struct:VbeInfoBlock	access:public
-VbeInfoBlock::VbeSignature	include/video_mode.h	/^	char VbeSignature[4];             \/\/ == "VESA"$/;"	m	struct:VbeInfoBlock	access:public
-VbeInfoBlock::VbeVersion	include/video_mode.h	/^	uint16_t VbeVersion;                 \/\/ == 0x0300 for VBE 3.0$/;"	m	struct:VbeInfoBlock	access:public
-VbeInfoBlock::VideoModePtr	include/video_mode.h	/^	uint16_t VideoModePtr[2];         \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
-VbeSignature	include/video_mode.h	/^	char VbeSignature[4];             \/\/ == "VESA"$/;"	m	struct:VbeInfoBlock	access:public
-VbeVersion	include/video_mode.h	/^	uint16_t VbeVersion;                 \/\/ == 0x0300 for VBE 3.0$/;"	m	struct:VbeInfoBlock	access:public
-VideoModePtr	include/video_mode.h	/^	uint16_t VideoModePtr[2];         \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
-Wchar	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-Xres	include/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
-Ychar	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-Yres	include/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
+VBE_FAR	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+VGA_DAC_DATA	cache/palette.c	7;"	d	file:
+VGA_DAC_READ_INDEX	cache/palette.c	5;"	d	file:
+VGA_DAC_WRITE_INDEX	cache/palette.c	6;"	d	file:
+VMEM_ADDR	include/device/video.h	11;"	d
+VbeInfoBlock	include/device/video_mode.h	/^struct VbeInfoBlock {$/;"	s
+VbeInfoBlock::Capabilities	include/device/video_mode.h	/^	uint8_t Capabilities[4];$/;"	m	struct:VbeInfoBlock	access:public
+VbeInfoBlock::OemStringPtr	include/device/video_mode.h	/^	uint16_t OemStringPtr[2];            \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
+VbeInfoBlock::TotalMemory	include/device/video_mode.h	/^	uint16_t TotalMemory;             \/\/ as # of 64KB blocks$/;"	m	struct:VbeInfoBlock	access:public
+VbeInfoBlock::VbeSignature	include/device/video_mode.h	/^	char VbeSignature[4];             \/\/ == "VESA"$/;"	m	struct:VbeInfoBlock	access:public
+VbeInfoBlock::VbeVersion	include/device/video_mode.h	/^	uint16_t VbeVersion;                 \/\/ == 0x0300 for VBE 3.0$/;"	m	struct:VbeInfoBlock	access:public
+VbeInfoBlock::VideoModePtr	include/device/video_mode.h	/^	uint16_t VideoModePtr[2];         \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
+VbeSignature	include/device/video_mode.h	/^	char VbeSignature[4];             \/\/ == "VESA"$/;"	m	struct:VbeInfoBlock	access:public
+VbeVersion	include/device/video_mode.h	/^	uint16_t VbeVersion;                 \/\/ == 0x0300 for VBE 3.0$/;"	m	struct:VbeInfoBlock	access:public
+VideoModePtr	include/device/video_mode.h	/^	uint16_t VideoModePtr[2];         \/\/ isa vbeFarPtr$/;"	m	struct:VbeInfoBlock	access:public
+Wchar	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+Xres	include/device/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
+Ychar	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+Yres	include/device/video_mode.h	/^	uint16_t Xres, Yres;$/;"	m	struct:ModeInfoBlock	access:public
 __ASSERT_H__	include/assert.h	2;"	d
 __COMMON__	include/common.h	2;"	d
 __ELF_H__	include/elf.h	2;"	d
 __IRQ_H__	include/irq.h	2;"	d
+__KEYBOARD_H__	include/device/keyboard.h	2;"	d
 __MMU_H__	include/mmu.h	2;"	d
 __PALETTE_H__	include/device/palette.h	2;"	d
 __STDARG_H__	include/stdarg.h	4;"	d
 __STDIO_H__	include/stdio.h	2;"	d
+__STRING_H__	include/string.h	2;"	d
 __TYPES_H__	include/types.h	2;"	d
 __VIDEO_H__	include/device/video.h	2;"	d
 __X86_H__	include/x86.h	2;"	d
 abort	include/assert.h	/^int abort(const char *, int);$/;"	p	signature:(const char *, int)
 abort	lib/abort.c	/^int abort(const char* filename, int line) {$/;"	f	signature:(const char* filename, int line)
-add_irq_handle	cache/irq_handle.c	/^add_irq_handle(int irq, void (*func)(void) ) {$/;"	f	signature:(int irq, void (*func)(void) )
+access_mode	kernel/game/lib/timer.c	/^		uint8_t access_mode  : 2;$/;"	m	struct:CmdByte::__anon1	file:	access:public
+add_irq_handle	kernel/game/game_main.c	/^void add_irq_handle(int, void(*)(void));$/;"	p	file:	signature:(int, void(*)(void))
+add_irq_handle	kernel/irq/irq_handle.c	/^void add_irq_handle(int irq, void (*func)(void) ) {$/;"	f	signature:(int irq, void (*func)(void) )
 asm_do_irq	kernel/irq/do_irq.S	/^asm_do_irq:$/;"	l
 assert	include/assert.h	15;"	d
-attributes	include/video_mode.h	/^	uint16_t attributes;$/;"	m	struct:ModeInfoBlock	access:public
-bank_size	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
-banks	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
-blue_mask	include/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
-blue_position	include/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
+attributes	include/device/video_mode.h	/^	uint16_t attributes;$/;"	m	struct:ModeInfoBlock	access:public
+bank_size	include/device/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+banks	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+blue	include/device/video.h	/^		uint8_t blue;$/;"	m	struct:Pixels::__anon3	access:public
+blue_mask	include/device/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
+blue_position	include/device/video_mode.h	/^	uint8_t blue_mask, blue_position;$/;"	m	struct:ModeInfoBlock	access:public
 bool	include/types.h	/^typedef _Bool bool;$/;"	t
 bootmain	boot/boot.c	/^int bootmain(void)$/;"	f	signature:(void)
-bpp	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+bpp	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
 breakpoint	include/x86.h	/^breakpoint(void)$/;"	f	signature:(void)
 breakpoint	include/x86.h	/^static __inline void breakpoint(void) __attribute__((always_inline));$/;"	p	signature:(void)
+channel	kernel/game/lib/timer.c	/^		uint8_t channel      : 2;$/;"	m	struct:CmdByte::__anon1	file:	access:public
+clear_buffer	include/device/video.h	/^void clear_buffer();$/;"	p	signature:()
+clear_buffer	kernel/game/lib/video.c	/^inline void clear_buffer() {$/;"	f
+clear_key	kernel/game/lib/keyboard.c	/^clear_key(int index) {$/;"	f	file:	signature:(int index)
+clear_screen	include/device/video.h	/^void clear_screen();$/;"	p	signature:()
+clear_screen	kernel/game/game_main.c	/^void clear_screen();$/;"	p	file:
+clear_screen	kernel/game/lib/video.c	/^inline void clear_screen() {$/;"	f
 cli	include/x86.h	/^cli(void)$/;"	f	signature:(void)
 cli	include/x86.h	/^static __inline void cli(void) __attribute__((always_inline));$/;"	p	signature:(void)
 cpuid	include/x86.h	/^cpuid(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp)$/;"	f	signature:(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp)
 cpuid	include/x86.h	/^static __inline void cpuid(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp);$/;"	p	signature:(uint32_t info, uint32_t *eaxp, uint32_t *ebxp, uint32_t *ecxp, uint32_t *edxp)
 cs	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"	m	struct:TrapFrame	access:public
-directcolor_attributes	include/video_mode.h	/^	uint8_t directcolor_attributes;$/;"	m	struct:ModeInfoBlock	access:public
-do_syscall	cache/irq_handle.c	/^void do_syscall(TrapFrame *);$/;"	p	file:	signature:(TrapFrame *)
+delete_enemy	kernel/game/src/effect.c	/^void delete_enemy(struct Enemy *enemy_p) {$/;"	f	signature:(struct Enemy *enemy_p)
+directcolor_attributes	include/device/video_mode.h	/^	uint8_t directcolor_attributes;$/;"	m	struct:ModeInfoBlock	access:public
+display_buffer	include/device/video.h	/^void display_buffer();$/;"	p	signature:()
+display_buffer	kernel/game/lib/video.c	/^inline void display_buffer() {$/;"	f
+do_syscall	kernel/irq/irq_handle.c	/^void do_syscall(TrapFrame *);$/;"	p	file:	signature:(TrapFrame *)
+drawRect_buffer	include/device/video.h	/^void drawRect_buffer(const uint8_t*,int,int,int,int);$/;"	p	signature:(const uint8_t*,int,int,int,int)
+drawRect_buffer	kernel/game/lib/video.c	/^inline void drawRect_buffer(const uint8_t *src, int x, int y, int w, int h){$/;"	f	signature:(const uint8_t *src, int x, int y, int w, int h)
+draw_screen	kernel/game/src/effect.c	/^void draw_screen() {$/;"	f
+draw_screen	kernel/game/src/game_loop.c	/^void draw_screen();$/;"	p	file:
 e_ehsize	include/elf.h	/^	uint16_t e_ehsize;$/;"	m	struct:Elf	access:public
 e_elf	include/elf.h	/^	uint8_t e_elf[12];$/;"	m	struct:Elf	access:public
 e_entry	include/elf.h	/^	uint32_t e_entry;$/;"	m	struct:Elf	access:public
@@ -416,10 +557,25 @@ edi	include/irq.h	/^	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;$/;"	m	
 edx	include/irq.h	/^	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame	access:public
 eflags	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"	m	struct:TrapFrame	access:public
 eip	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"	m	struct:TrapFrame	access:public
+enemy	kernel/game/src/effect.c	/^} *enemy_head, *enemy_avail,enemy[NR_ENEMY];$/;"	v	typeref:struct:Enemy
+enemy_avail	kernel/game/src/effect.c	/^} *enemy_head, *enemy_avail,enemy[NR_ENEMY];$/;"	v	typeref:struct:Enemy
+enemy_head	kernel/game/src/effect.c	/^} *enemy_head, *enemy_avail,enemy[NR_ENEMY];$/;"	v	typeref:struct:Enemy
 error_code	include/irq.h	/^	uint32_t error_code, eip, cs, eflags;$/;"	m	struct:TrapFrame	access:public
 esi	include/irq.h	/^	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame	access:public
-false	include/types.h	/^enum { false, true };$/;"	e	enum:__anon1
-gImage_PARK	include/logo.h	/^const unsigned char gImage_PARK[1440000] = {$/;"	v
+false	include/types.h	/^enum { false, true };$/;"	e	enum:__anon4
+flyying_logo	include/device/video.h	/^void flyying_logo();$/;"	p	signature:()
+flyying_logo	kernel/game/lib/video.c	/^void flyying_logo() {$/;"	f
+gImage_FeiFan_1	kernel/game/data/FeiFan_1.c	/^const unsigned char gImage_FeiFan_1[19200] = { \/* 0X00,0X18,0X50,0X00,0X50,0X00,0X00,0X39, *\/$/;"	v
+gImage_FeiFan_2	kernel/game/data/FeiFan_2.c	/^const unsigned char gImage_FeiFan_2[19200] = { \/* 0X00,0X18,0X50,0X00,0X50,0X00,0X00,0X39, *\/$/;"	v
+gImage_FeiFan_3	kernel/game/data/FeiFan_3.c	/^const unsigned char gImage_FeiFan_3[19200] = { \/* 0X00,0X18,0X50,0X00,0X50,0X00,0X00,0X39, *\/$/;"	v
+gImage_FeiFan_4	kernel/game/data/FeiFan_4.c	/^const unsigned char gImage_FeiFan_4[19200] = { \/* 0X00,0X18,0X50,0X00,0X50,0X00,0X00,0X39, *\/$/;"	v
+gImage_FeiFan_5	kernel/game/data/FeiFan_5.c	/^const unsigned char gImage_FeiFan_5[19200] = { \/* 0X00,0X18,0X50,0X00,0X50,0X00,0X00,0X39, *\/$/;"	v
+gImage_LowSing	kernel/game/data/LowSing.c	/^const unsigned char gImage_LowSing[19200] = { \/* 0X00,0X18,0X50,0X00,0X50,0X00,0X00,0X39, *\/$/;"	v
+gImage_PARK	kernel/game/data/PARK.c	/^const unsigned char gImage_PARK[1440000] = {$/;"	v
+game_loop	kernel/game/game_main.c	/^void game_loop();$/;"	p	file:
+game_loop	kernel/game/src/game_loop.c	/^void game_loop()$/;"	f
+game_main	kernel/game/game_main.c	/^void game_main()$/;"	f
+game_main	kernel/main.c	/^void game_main();$/;"	p	file:
 gd_args	include/mmu.h	/^	unsigned gd_args : 5;        \/\/ # args, 0 for interrupt\/trap gates$/;"	m	struct:GateDescriptor	access:public
 gd_dpl	include/mmu.h	/^	unsigned gd_dpl : 2;         \/\/ descriptor(meaning new) privilege level$/;"	m	struct:GateDescriptor	access:public
 gd_off_15_0	include/mmu.h	/^	unsigned gd_off_15_0 : 16;   \/\/ low 16 bits of offset in segment$/;"	m	struct:GateDescriptor	access:public
@@ -431,23 +587,42 @@ gd_sel	include/mmu.h	/^	unsigned gd_sel : 16;        \/\/ segment selector$/;"	m
 gd_type	include/mmu.h	/^	unsigned gd_type : 4;        \/\/ type(STS_{TG,IG32,TG32})$/;"	m	struct:GateDescriptor	access:public
 gdt	boot/start.S	/^gdt:$/;"	l
 gdtdesc	boot/start.S	/^gdtdesc:$/;"	l
-granularity	include/video_mode.h	/^	uint16_t granularity;$/;"	m	struct:ModeInfoBlock	access:public
-green_mask	include/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
-green_position	include/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
-handle_count	cache/irq_handle.c	/^static int handle_count = 0;$/;"	v	file:
-handle_pool	cache/irq_handle.c	/^static struct IRQ_t handle_pool[NR_IRQ_HANDLE];$/;"	v	typeref:struct:IRQ_t	file:
-handles	cache/irq_handle.c	/^static struct IRQ_t *handles[NR_HARD_INTR];$/;"	v	typeref:struct:IRQ_t	file:
-idt	kernel/irq/idt.c	/^static Gatedesc idt[NR_IRQ];$/;"	v	file:
-image_pages	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+generate_enemy	kernel/game/src/effect.c	/^bool generate_enemy() {$/;"	f
+get_keycode	kernel/game/lib/keyboard.c	/^get_keycode(int index) {$/;"	f	file:	signature:(int index)
+get_press_key	kernel/game/lib/keyboard.c	/^void get_press_key();$/;"	p	file:
+get_press_key	kernel/game/lib/keyboard.c	/^void get_press_key(uint32_t keycode) {$/;"	f	signature:(uint32_t keycode)
+get_release_key	kernel/game/lib/keyboard.c	/^void get_release_key();$/;"	p	file:
+get_release_key	kernel/game/lib/keyboard.c	/^void get_release_key(uint32_t keycode) {$/;"	f	signature:(uint32_t keycode)
+granularity	include/device/video_mode.h	/^	uint16_t granularity;$/;"	m	struct:ModeInfoBlock	access:public
+green	include/device/video.h	/^		uint8_t green;$/;"	m	struct:Pixels::__anon3	access:public
+green_mask	include/device/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
+green_position	include/device/video_mode.h	/^	uint8_t green_mask, green_position;$/;"	m	struct:ModeInfoBlock	access:public
+h	include/device/video.h	/^	int w, h;$/;"	m	struct:Surface	access:public
+h	kernel/game/src/effect.c	/^	int w, h;$/;"	m	struct:Enemy	file:	access:public
+handle_count	kernel/irq/irq_handle.c	/^static int handle_count = 0;$/;"	v	file:
+handle_pool	kernel/irq/irq_handle.c	/^static struct IRQ_t handle_pool[NR_IRQ_HANDLE];$/;"	v	typeref:struct:IRQ_t	file:
+handles	kernel/irq/irq_handle.c	/^static struct IRQ_t *handles[NR_HARD_INTR]; \/\/ handles is an array of lists$/;"	v	typeref:struct:IRQ_t	file:
+hlt	include/x86.h	/^hlt(void)$/;"	f	signature:(void)
+hlt	include/x86.h	/^static __inline void hlt(void) __attribute__((always_inline));$/;"	p	signature:(void)
+idt	kernel/irq/idt.c	/^Gatedesc idt[NR_IRQ];$/;"	v
+image_pages	include/device/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
 inb	include/x86.h	/^inb(int port)$/;"	f	signature:(int port)
 inb	include/x86.h	/^static __inline uint8_t inb(int port) __attribute__((always_inline));$/;"	p	signature:(int port)
+inc_player	kernel/game/src/effect.c	/^int inc_player, x_player;$/;"	v
+inc_x	kernel/game/lib/video.c	/^static int inc_x = 1, inc_y = 1;$/;"	v	file:
+inc_y	kernel/game/lib/video.c	/^static int inc_x = 1, inc_y = 1;$/;"	v	file:
+init_effect	kernel/game/game_main.c	/^void init_effect();$/;"	p	file:
+init_effect	kernel/game/src/effect.c	/^void init_effect() {$/;"	f
 init_i8259	kernel/irq/i8259.c	/^void init_i8259(void) {$/;"	f	signature:(void)
 init_i8259	kernel/main.c	/^void init_i8259();$/;"	p	file:
 init_idt	kernel/irq/idt.c	/^void init_idt() {$/;"	f
+init_idt	kernel/main.c	/^void init_idt();$/;"	p	file:
 init_serial	kernel/main.c	/^void init_serial();$/;"	p	file:
 init_serial	lib/serial.c	/^void init_serial() {$/;"	f
-init_vmem	kernel/device/video.c	/^init_vmem() {$/;"	f
-init_vmem	kernel/main.c	/^void init_vmem();$/;"	p	file:
+init_timer	kernel/game/lib/timer.c	/^void init_timer() {$/;"	f
+init_timer	kernel/main.c	/^void init_timer();$/;"	p	file:
+init_vmem	include/device/video.h	/^void init_vmem();$/;"	p	signature:()
+init_vmem	kernel/game/lib/video.c	/^inline void init_vmem() {$/;"	f
 inl	include/x86.h	/^inl(int port)$/;"	f	signature:(int port)
 inl	include/x86.h	/^static __inline uint32_t inl(int port) __attribute__((always_inline));$/;"	p	signature:(int port)
 insb	include/x86.h	/^insb(int port, void *addr, int cnt)$/;"	f	signature:(int port, void *addr, int cnt)
@@ -471,8 +646,14 @@ irq1	kernel/irq/idt.c	/^void irq1();$/;"	p	file:
 irq14	kernel/irq/idt.c	/^void irq14();$/;"	p	file:
 irq_empty	kernel/irq/do_irq.S	/^			irq_empty:	pushl $0;  pushl   $-1; jmp asm_do_irq$/;"	l
 irq_empty	kernel/irq/idt.c	/^void irq_empty();$/;"	p	file:
-irq_handle	cache/irq_handle.c	/^void irq_handle(TrapFrame *tf) {$/;"	f	signature:(TrapFrame *tf)
+irq_handle	kernel/irq/irq_handle.c	/^void irq_handle(TrapFrame *tf) {$/;"	f	signature:(TrapFrame *tf)
 is_serial_idle	lib/serial.c	/^int is_serial_idle() {$/;"	f
+key_state	kernel/game/lib/keyboard.c	/^static int key_state[NR_KEYS];$/;"	v	file:
+keyboard_event	include/device/keyboard.h	/^void keyboard_event();$/;"	p	signature:()
+keyboard_event	kernel/game/game_main.c	/^void keyboard_event();$/;"	p	file:
+keyboard_event	kernel/game/lib/keyboard.c	/^void keyboard_event(void) {$/;"	f	signature:(void)
+keyboard_string	kernel/game/lib/keyboard.c	/^static const char *keyboard_string[] = {"UP", "DOWN", "LEFT", "RIGHT",};$/;"	v	file:
+keycode_array	kernel/game/lib/keyboard.c	/^static const int keycode_array[] = {$/;"	v	file:
 lcr0	include/x86.h	/^lcr0(uint32_t val)$/;"	f	signature:(uint32_t val)
 lcr0	include/x86.h	/^static __inline void lcr0(uint32_t val) __attribute__((always_inline));$/;"	p	signature:(uint32_t val)
 lcr3	include/x86.h	/^lcr3(uint32_t val)$/;"	f	signature:(uint32_t val)
@@ -484,16 +665,31 @@ lidt	include/x86.h	/^lidt(void *p)$/;"	f	signature:(void *p)
 lidt	include/x86.h	/^static __inline void lidt(void *p) __attribute__((always_inline));$/;"	p	signature:(void *p)
 lldt	include/x86.h	/^lldt(uint16_t sel)$/;"	f	signature:(uint16_t sel)
 lldt	include/x86.h	/^static __inline void lldt(uint16_t sel) __attribute__((always_inline));$/;"	p	signature:(uint16_t sel)
+logo_x	kernel/game/lib/video.c	/^static int logo_x = 0, logo_y = 0;$/;"	v	file:
+logo_y	kernel/game/lib/video.c	/^static int logo_x = 0, logo_y = 0;$/;"	v	file:
 ltr	include/x86.h	/^ltr(uint16_t sel)$/;"	f	signature:(uint16_t sel)
 ltr	include/x86.h	/^static __inline void ltr(uint16_t sel) __attribute__((always_inline));$/;"	p	signature:(uint16_t sel)
 main	kernel/main.c	/^int main(void) {$/;"	f	signature:(void)
-memory_model	include/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+memcmp	include/string.h	/^int	memcmp(const void *s1, const void *s2, size_t len);$/;"	p	signature:(const void *s1, const void *s2, size_t len)
+memcmp	lib/string.c	/^memcmp(const void *v1, const void *v2, size_t n)$/;"	f	signature:(const void *v1, const void *v2, size_t n)
+memcpy	include/string.h	/^void *	memcpy(void *dst, const void *src, size_t len);$/;"	p	signature:(void *dst, const void *src, size_t len)
+memcpy	lib/string.c	/^memcpy(void *dst, const void *src, size_t n)$/;"	f	signature:(void *dst, const void *src, size_t n)
+memfind	include/string.h	/^void *	memfind(const void *s, int c, size_t len);$/;"	p	signature:(const void *s, int c, size_t len)
+memfind	lib/string.c	/^memfind(const void *s, int c, size_t n)$/;"	f	signature:(const void *s, int c, size_t n)
+memmove	include/string.h	/^void *	memmove(void *dst, const void *src, size_t len);$/;"	p	signature:(void *dst, const void *src, size_t len)
+memmove	lib/string.c	/^memmove(void *dst, const void *src, size_t n)$/;"	f	signature:(void *dst, const void *src, size_t n)
+memory_model	include/device/video_mode.h	/^	uint8_t memory_model, bank_size, image_pages;$/;"	m	struct:ModeInfoBlock	access:public
+memset	include/string.h	/^void *	memset(void *dst, int c, size_t len);$/;"	p	signature:(void *dst, int c, size_t len)
+memset	lib/string.c	/^memset(void *v, int c, size_t n)$/;"	f	signature:(void *v, int c, size_t n)
+mode	kernel/game/lib/timer.c	/^union CmdByte mode = {$/;"	v	typeref:union:CmdByte
 myread	tools/Image2Lcd.sh	/^myread() {$/;"	f
-next	cache/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
+next	kernel/game/src/effect.c	/^	struct Enemy *next;$/;"	m	struct:Enemy	typeref:struct:Enemy::Enemy	file:	access:public
 next	kernel/irq/irq_handle.c	/^	struct IRQ_t *next;$/;"	m	struct:IRQ_t	typeref:struct:IRQ_t::IRQ_t	file:	access:public
+nr_enemy	kernel/game/src/effect.c	/^int nr_enemy;$/;"	v
 off_t	include/types.h	/^typedef int32_t off_t;$/;"	t
 offsetof	include/types.h	71;"	d
 old_esp	include/irq.h	/^	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;$/;"	m	struct:TrapFrame	access:public
+operate_mode	kernel/game/lib/timer.c	/^		uint8_t operate_mode : 3;$/;"	m	struct:CmdByte::__anon1	file:	access:public
 out_num	lib/stdio.c	/^void out_num(unsigned int x, unsigned int base, bool SIGN){$/;"	f	signature:(unsigned int x, unsigned int base, bool SIGN)
 out_num	lib/stdio.c	/^void out_num(unsigned, unsigned, bool);$/;"	p	file:	signature:(unsigned, unsigned, bool)
 out_string	lib/stdio.c	/^void out_string(char *s){$/;"	f	signature:(char *s)
@@ -518,21 +714,26 @@ p_offset	include/elf.h	/^	uint32_t p_offset;$/;"	m	struct:Proghdr	access:public
 p_pa	include/elf.h	/^	uint32_t p_pa;$/;"	m	struct:Proghdr	access:public
 p_type	include/elf.h	/^	uint32_t p_type;$/;"	m	struct:Proghdr	access:public
 p_va	include/elf.h	/^	uint32_t p_va;$/;"	m	struct:Proghdr	access:public
-palette	kernel/device/palette.c	/^static uint8_t palette[NR_PALETTE_ENTRY * 4] = {$/;"	v	file:
+palette	cache/palette.c	/^static uint8_t palette[NR_PALETTE_ENTRY * 4] = {$/;"	v	file:
 panic	include/assert.h	26;"	d
 pd_base	include/mmu.h	/^	uint32_t pd_base;		\/\/ Base address$/;"	m	struct:Pseudodesc	access:public
 pd_lim	include/mmu.h	/^	uint16_t pd_lim;		\/\/ Limit$/;"	m	struct:Pseudodesc	access:public
 physaddr_t	include/types.h	/^typedef uint32_t physaddr_t;$/;"	t
-physbase	include/video_mode.h	/^	uint32_t physbase;  \/\/ your LFB (Linear Framebuffer) address ;)$/;"	m	struct:ModeInfoBlock	access:public
-pitch	include/video_mode.h	/^	uint16_t pitch; \/\/ bytes per scanline$/;"	m	struct:ModeInfoBlock	access:public
-planes	include/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
+physbase	include/device/video_mode.h	/^	uint32_t physbase;  \/\/ your LFB (Linear Framebuffer) address ;)$/;"	m	struct:ModeInfoBlock	access:public
+pitch	include/device/video_mode.h	/^	uint16_t pitch; \/\/ bytes per scanline$/;"	m	struct:ModeInfoBlock	access:public
+pixels	include/device/video.h	/^	uint8_t *pixels;$/;"	m	struct:Surface	access:public
+planes	include/device/video_mode.h	/^	uint8_t Wchar, Ychar, planes, bpp, banks;$/;"	m	struct:ModeInfoBlock	access:public
 ppn_t	include/types.h	/^typedef uint32_t ppn_t;$/;"	t
+present_mode	kernel/game/lib/timer.c	/^		uint8_t present_mode : 1;$/;"	m	struct:CmdByte::__anon1	file:	access:public
 printk	include/assert.h	/^int printk(const char *, ...);$/;"	p	signature:(const char *, ...)
 printk	include/stdio.h	/^int printk(const char *, ...);$/;"	p	signature:(const char *, ...)
 printk	kernel/test/printk_test.c	/^int printk(const char *, ...);$/;"	p	file:	signature:(const char *, ...)
 printk	lib/stdio.c	/^int printk(const char *fmt, ...){$/;"	f	signature:(const char *fmt, ...)
 printk_test	kernel/main.c	/^void printk_test();$/;"	p	file:
 printk_test	kernel/test/printk_test.c	/^void printk_test(){$/;"	f
+process_keys	include/device/keyboard.h	/^void process_keys();$/;"	p	signature:()
+process_keys	kernel/game/lib/keyboard.c	/^void process_keys() {$/;"	f
+query_key	kernel/game/lib/keyboard.c	/^query_key(int index) {$/;"	f	file:	signature:(int index)
 rcr0	include/x86.h	/^rcr0(void)$/;"	f	signature:(void)
 rcr0	include/x86.h	/^static __inline uint32_t rcr0(void) __attribute__((always_inline));$/;"	p	signature:(void)
 rcr2	include/x86.h	/^rcr2(void)$/;"	f	signature:(void)
@@ -553,17 +754,19 @@ read_tsc	include/x86.h	/^static __inline uint64_t read_tsc(void) __attribute__((
 readsect	boot/boot.c	/^void readsect(void *dst, int offset) {$/;"	f	signature:(void *dst, int offset)
 readseg	boot/boot.c	/^void readseg(unsigned char *pa, int count, int offset) {$/;"	f	signature:(unsigned char *pa, int count, int offset)
 readseg	boot/boot.c	/^void readseg(unsigned char*,int,int);$/;"	p	file:	signature:(unsigned char*,int,int)
-realFctPtr	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+realFctPtr	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
 rec_out_num	lib/stdio.c	/^void rec_out_num(unsigned int x, unsigned int base){$/;"	f	signature:(unsigned int x, unsigned int base)
-red_mask	include/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
-red_position	include/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
-reserved0	include/video_mode.h	/^	uint8_t reserved0;$/;"	m	struct:ModeInfoBlock	access:public
-reserved1	include/video_mode.h	/^	uint32_t reserved1;$/;"	m	struct:ModeInfoBlock	access:public
-reserved2	include/video_mode.h	/^	uint16_t reserved2;$/;"	m	struct:ModeInfoBlock	access:public
-routine	cache/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
+recycle_enemy	kernel/game/src/effect.c	/^bool recycle_enemy() {$/;"	f
+red	include/device/video.h	/^		uint8_t red;$/;"	m	struct:Pixels::__anon3	access:public
+red_mask	include/device/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
+red_position	include/device/video_mode.h	/^	uint8_t red_mask, red_position;$/;"	m	struct:ModeInfoBlock	access:public
+release_key	kernel/game/lib/keyboard.c	/^release_key(int index) {$/;"	f	file:	signature:(int index)
+reserved0	include/device/video_mode.h	/^	uint8_t reserved0;$/;"	m	struct:ModeInfoBlock	access:public
+reserved1	include/device/video_mode.h	/^	uint32_t reserved1;$/;"	m	struct:ModeInfoBlock	access:public
+reserved2	include/device/video_mode.h	/^	uint16_t reserved2;$/;"	m	struct:ModeInfoBlock	access:public
 routine	kernel/irq/irq_handle.c	/^	void (*routine)(void);$/;"	m	struct:IRQ_t	file:	access:public
-rsv_mask	include/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
-rsv_position	include/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
+rsv_mask	include/device/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
+rsv_position	include/device/video_mode.h	/^	uint8_t rsv_mask, rsv_position;$/;"	m	struct:ModeInfoBlock	access:public
 sd_avl	include/mmu.h	/^	unsigned sd_avl : 1;        \/\/ Unused (available for software use)$/;"	m	struct:SegmentDescriptor	access:public
 sd_base_15_0	include/mmu.h	/^	unsigned sd_base_15_0 : 16; \/\/ Low bits of segment base address$/;"	m	struct:SegmentDescriptor	access:public
 sd_base_23_16	include/mmu.h	/^	unsigned sd_base_23_16 : 8; \/\/ Middle bits of segment base address$/;"	m	struct:SegmentDescriptor	access:public
@@ -577,8 +780,8 @@ sd_p	include/mmu.h	/^	unsigned sd_p : 1;          \/\/ Present$/;"	m	struct:Segm
 sd_rsv1	include/mmu.h	/^	unsigned sd_rsv1 : 1;       \/\/ Reserved$/;"	m	struct:SegmentDescriptor	access:public
 sd_s	include/mmu.h	/^	unsigned sd_s : 1;          \/\/ 0 = system, 1 = application$/;"	m	struct:SegmentDescriptor	access:public
 sd_type	include/mmu.h	/^	unsigned sd_type : 4;       \/\/ Segment type (see STS_ constants)$/;"	m	struct:SegmentDescriptor	access:public
-segmentA	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
-segmentB	include/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+segmentA	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
+segmentB	include/device/video_mode.h	/^	uint16_t segmentA, segmentB, VBE_FAR, realFctPtr;$/;"	m	struct:ModeInfoBlock	access:public
 serial_output_test	lib/serial.c	/^void serial_output_test(){$/;"	f
 serial_printc	lib/serial.c	/^void serial_printc(char a){$/;"	f	signature:(char a)
 serial_printc	lib/stdio.c	/^void serial_printc(char);$/;"	p	file:	signature:(char)
@@ -594,15 +797,42 @@ sh_name	include/elf.h	/^	uint32_t sh_name;$/;"	m	struct:Secthdr	access:public
 sh_offset	include/elf.h	/^	uint32_t sh_offset;$/;"	m	struct:Secthdr	access:public
 sh_size	include/elf.h	/^	uint32_t sh_size;$/;"	m	struct:Secthdr	access:public
 sh_type	include/elf.h	/^	uint32_t sh_type;$/;"	m	struct:Secthdr	access:public
+show_police	include/device/video.h	/^void show_police();$/;"	p	signature:()
+show_police	kernel/game/lib/video.c	/^void show_police() {$/;"	f
 size_t	include/types.h	/^typedef uint32_t size_t;$/;"	t
 ssize_t	include/types.h	/^typedef int32_t ssize_t;$/;"	t
 start	boot/start.S	/^start:$/;"	l
 start32	boot/start.S	/^start32:$/;"	l
 sti	include/x86.h	/^static __inline void sti(void) __attribute__((always_inline));$/;"	p	signature:(void)
 sti	include/x86.h	/^sti(void)$/;"	f	signature:(void)
+strcat	include/string.h	/^char *	strcat(char *dst, const char *src);$/;"	p	signature:(char *dst, const char *src)
+strcat	lib/string.c	/^strcat(char *dst, const char *src)$/;"	f	signature:(char *dst, const char *src)
+strchr	include/string.h	/^char *	strchr(const char *s, char c);$/;"	p	signature:(const char *s, char c)
+strchr	lib/string.c	/^strchr(const char *s, char c)$/;"	f	signature:(const char *s, char c)
+strcmp	include/string.h	/^int	strcmp(const char *s1, const char *s2);$/;"	p	signature:(const char *s1, const char *s2)
+strcmp	lib/string.c	/^strcmp(const char *p, const char *q)$/;"	f	signature:(const char *p, const char *q)
+strcpy	include/string.h	/^char *	strcpy(char *dst, const char *src);$/;"	p	signature:(char *dst, const char *src)
+strcpy	lib/string.c	/^strcpy(char *dst, const char *src)$/;"	f	signature:(char *dst, const char *src)
+strfind	include/string.h	/^char *	strfind(const char *s, char c);$/;"	p	signature:(const char *s, char c)
+strfind	lib/string.c	/^strfind(const char *s, char c)$/;"	f	signature:(const char *s, char c)
+strlcpy	include/string.h	/^size_t	strlcpy(char *dst, const char *src, size_t size);$/;"	p	signature:(char *dst, const char *src, size_t size)
+strlcpy	lib/string.c	/^strlcpy(char *dst, const char *src, size_t size)$/;"	f	signature:(char *dst, const char *src, size_t size)
+strlen	include/string.h	/^int	strlen(const char *s);$/;"	p	signature:(const char *s)
+strlen	lib/string.c	/^strlen(const char *s)$/;"	f	signature:(const char *s)
+strncmp	include/string.h	/^int	strncmp(const char *s1, const char *s2, size_t size);$/;"	p	signature:(const char *s1, const char *s2, size_t size)
+strncmp	lib/string.c	/^strncmp(const char *p, const char *q, size_t n)$/;"	f	signature:(const char *p, const char *q, size_t n)
+strncpy	include/string.h	/^char *	strncpy(char *dst, const char *src, size_t size);$/;"	p	signature:(char *dst, const char *src, size_t size)
+strncpy	lib/string.c	/^strncpy(char *dst, const char *src, size_t size) {$/;"	f	signature:(char *dst, const char *src, size_t size)
+strnlen	include/string.h	/^int	strnlen(const char *s, size_t size);$/;"	p	signature:(const char *s, size_t size)
+strnlen	lib/string.c	/^strnlen(const char *s, size_t size)$/;"	f	signature:(const char *s, size_t size)
+strtol	include/string.h	/^long	strtol(const char *s, char **endptr, int base);$/;"	p	signature:(const char *s, char **endptr, int base)
+strtol	lib/string.c	/^strtol(const char *s, char **endptr, int base)$/;"	f	signature:(const char *s, char **endptr, int base)
+time_tick	kernel/game/lib/timer.c	/^volatile uint32_t time_tick = 0;$/;"	v
+timer_event	kernel/game/game_main.c	/^void timer_event();$/;"	p	file:
+timer_event	kernel/game/lib/timer.c	/^void timer_event(void) {$/;"	f	signature:(void)
 tlbflush	include/x86.h	/^static __inline void tlbflush(void) __attribute__((always_inline));$/;"	p	signature:(void)
 tlbflush	include/x86.h	/^tlbflush(void)$/;"	f	signature:(void)
-true	include/types.h	/^enum { false, true };$/;"	e	enum:__anon1
+true	include/types.h	/^enum { false, true };$/;"	e	enum:__anon4
 ts_cr3	include/mmu.h	/^	physaddr_t ts_cr3;	\/\/ Page directory base$/;"	m	struct:TaskstateSegment	access:public
 ts_cs	include/mmu.h	/^	uint16_t ts_cs;$/;"	m	struct:TaskstateSegment	access:public
 ts_ds	include/mmu.h	/^	uint16_t ts_ds;$/;"	m	struct:TaskstateSegment	access:public
@@ -645,10 +875,14 @@ uint32_t	include/types.h	/^typedef unsigned int uint32_t;$/;"	t
 uint64_t	include/types.h	/^typedef unsigned long long uint64_t;$/;"	t
 uint8_t	include/types.h	/^typedef unsigned char uint8_t;$/;"	t
 uintptr_t	include/types.h	/^typedef uint32_t uintptr_t;$/;"	t
+update_player	kernel/game/src/effect.c	/^void update_player() {$/;"	f
+update_player	kernel/game/src/game_loop.c	/^void update_player();$/;"	p	file:
+v_buffer	kernel/game/src/effect.c	/^uint8_t v_buffer[SCR_SIZE];$/;"	v
 va_arg	include/stdarg.h	10;"	d
 va_end	include/stdarg.h	12;"	d
 va_list	include/stdarg.h	/^typedef __builtin_va_list va_list;$/;"	t
 va_start	include/stdarg.h	8;"	d
+val	kernel/game/lib/timer.c	/^	uint8_t val;$/;"	m	union:CmdByte	file:	access:public
 vec0	kernel/irq/idt.c	/^void vec0();$/;"	p	file:
 vec1	kernel/irq/idt.c	/^void vec1();$/;"	p	file:
 vec10	kernel/irq/idt.c	/^void vec10();$/;"	p	file:
@@ -665,14 +899,21 @@ vec7	kernel/irq/idt.c	/^void vec7();$/;"	p	file:
 vec8	kernel/irq/idt.c	/^void vec8();$/;"	p	file:
 vec9	kernel/irq/idt.c	/^void vec9();$/;"	p	file:
 vecsys	kernel/irq/idt.c	/^void vecsys();$/;"	p	file:
-vmem	kernel/device/video.c	/^uint8_t *vmem = ((uint8_t*)VMEM_ADDR);$/;"	v
+vmem	kernel/game/lib/video.c	/^uint8_t *vmem = ((uint8_t*)VMEM_ADDR);$/;"	v
+w	include/device/video.h	/^	int w, h;$/;"	m	struct:Surface	access:public
+w	kernel/game/src/effect.c	/^	int w, h;$/;"	m	struct:Enemy	file:	access:public
 waitdisk	boot/boot.c	/^void waitdisk(void) {$/;"	f	signature:(void)
-winA	include/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
-winB	include/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
-winsize	include/video_mode.h	/^	uint16_t winsize;$/;"	m	struct:ModeInfoBlock	access:public
+winA	include/device/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
+winB	include/device/video_mode.h	/^    uint8_t winA,winB;$/;"	m	struct:ModeInfoBlock	access:public
+winsize	include/device/video_mode.h	/^	uint16_t winsize;$/;"	m	struct:ModeInfoBlock	access:public
 write_eflags	include/x86.h	/^static __inline void write_eflags(uint32_t eflags) __attribute__((always_inline));$/;"	p	signature:(uint32_t eflags)
 write_eflags	include/x86.h	/^write_eflags(uint32_t eflags)$/;"	f	signature:(uint32_t eflags)
 write_idtr	kernel/irq/idt.c	/^static void write_idtr(void *addr, uint32_t size) {$/;"	f	file:	signature:(void *addr, uint32_t size)
+write_palette	cache/palette.c	/^void write_palette() {$/;"	f
 write_palette	include/device/palette.h	/^void write_palette();$/;"	p	signature:()
-write_palette	kernel/device/palette.c	/^void write_palette() {$/;"	f
+x	include/device/video.h	/^	int x, y;$/;"	m	struct:Surface	access:public
+x	kernel/game/src/effect.c	/^	int x, y;$/;"	m	struct:Enemy	file:	access:public
+x_player	kernel/game/src/effect.c	/^int inc_player, x_player;$/;"	v
 xchg	include/x86.h	/^xchg(volatile uint32_t *addr, uint32_t newval)$/;"	f	signature:(volatile uint32_t *addr, uint32_t newval)
+y	include/device/video.h	/^	int x, y;$/;"	m	struct:Surface	access:public
+y	kernel/game/src/effect.c	/^	int x, y;$/;"	m	struct:Enemy	file:	access:public

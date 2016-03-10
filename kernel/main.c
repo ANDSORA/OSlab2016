@@ -1,12 +1,14 @@
 #include <include/common.h>
-#include <include/video_mode.h>
+#include <include/device/video.h>
+//#include <include/device/video_mode.h>
 #include <include/x86.h>
+#include <include/string.h>
 
 void init_serial();
 void init_i8259();
 void init_idt();
 void init_timer();
-void init_vmem();
+//void init_vmem();
 
 void printk_test();
 
@@ -29,6 +31,9 @@ int main(void) {
 
 	//TEST_WORK();
 	printk("Here is main()\n");
+
+	//union Pixels aa;
+	//printk("The size of Pixels is %d\n", sizeof(aa));
 
 	sti();
 	game_main();
