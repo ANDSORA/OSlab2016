@@ -16,8 +16,8 @@
 #define FF_WIDTH		80
 #define FF_HEIGHT		80
 #define FF_WIDTH_SIZE	(FF_WIDTH * SCR_DEPTH)
-#define BT_WIDTH		8
-#define BT_HEIGHT		40
+#define BT_WIDTH		4
+#define BT_HEIGHT		20
 #define BT_WIDTH_SIZE	(BT_WIDTH * SCR_DEPTH)
 
 union Pixels {

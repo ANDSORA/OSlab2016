@@ -35,7 +35,7 @@ void game_loop()
 
 		while(now < target){
 			if(now % 5 == 0) update_bullet();
-			if(now % 10 == 3) update_player();
+			if(now % 8 == 0) update_player();
 			if(now % 10 == 6) dead_flag = update_enemy();
 			if(now % 10 == 0) draw_screen();
 			if(now % 100 == 0) generate_bullet();
