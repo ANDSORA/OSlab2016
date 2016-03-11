@@ -7,6 +7,15 @@
 
 extern uint32_t time_tick;
 
+/*
+static bool reborn;
+inline void enable_reborn() {
+	reborn = true;
+}
+inline void close_reborn() {
+	reborn = false;
+} */
+
 bool generate_enemy();
 bool update_enemy();
 bool generate_bullet();
@@ -46,5 +55,5 @@ void game_loop()
 	}
 
 	clear_screen();
-	while(1);
+	//while(1);
 }
