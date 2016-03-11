@@ -102,8 +102,8 @@ extern bool enable_bullet;
 
 void get_press_key(uint32_t keycode) {
 	switch (keycode) {
-		case K_LEFT: inc_player = -1; break;
-		case K_RIGHT: inc_player = 1; break;
+		case K_LEFT: inc_player --; break;
+		case K_RIGHT: inc_player ++; break;
 		case K_Z: enable_bullet = true; break;
 		case K_ENTER: enable_reborn(); break;
 		case K_UP:
@@ -114,8 +114,8 @@ void get_press_key(uint32_t keycode) {
 
 void get_release_key(uint32_t keycode) {
 	switch (keycode) {
-		case K_LEFT:
-		case K_RIGHT: inc_player = 0; break;
+		case K_LEFT: inc_player ++; break;
+		case K_RIGHT: inc_player --; break;
 		case K_Z: enable_bullet = false; break;
 		case K_ENTER: close_reborn(); break;
 		case K_UP:
