@@ -1,6 +1,6 @@
 #include <include/common.h>
 #include <include/device/video.h>
-//#include <include/device/video_mode.h>
+#include <include/device/video_mode.h>
 #include <include/x86.h>
 #include <include/string.h>
 
@@ -27,13 +27,14 @@ void TEST_WORK(){
 }
 
 int main(void) {
+	//struct ModeInfoBlock *MIB = (struct ModeInfoBlock *)(0x7e00);
+	//VMEM_ADDR = MIB->physbase;
+	//printk("%x\n", MIB->physbase);
+
 	INIT_WORK();
 
 	//TEST_WORK();
 	printk("Here is main()\n");
-
-	//union Pixels aa;
-	//printk("The size of Pixels is %d\n", sizeof(aa));
 
 	sti();
 	game_main();
