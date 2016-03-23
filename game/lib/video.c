@@ -1,9 +1,16 @@
 #include <include/device/video.h>
 #include <include/logo.h>
 #include <include/string.h>
+#include <include/device/video_mode.h>
 
-uint8_t *vmem = ((uint8_t*)VMEM_ADDR);
+//uint8_t *vmem = ((uint8_t*)VMEM_ADDR);
+uint8_t *vmem;
 extern uint8_t v_buffer[SCR_SIZE];
+
+void init_vmem_addr() {
+	struct ModeInfoBlock *MIB = (struct ModeInfoBlock *)(0x7e00);
+	vmem = (uint8_t *)MIB->physbase;
+}
 
 inline void init_vmem() {
 	memcpy(vmem, gImage_PARK, SCR_SIZE);

@@ -31,7 +31,8 @@ void irq_handle(TrapFrame *tf) {
 
 	int irq = tf->irq;
 
-	if(irq < 1000) panic("Unhandled exception!\n");
+	if(irq == 0x80) do_syscall(tf);
+	else if(irq < 1000) panic("Unhandled exception!\n");
 	else {
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);

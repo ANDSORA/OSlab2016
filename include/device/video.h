@@ -8,7 +8,7 @@
 #define SCR_DEPTH		3
 #define SCR_WIDTH_SIZE	(SCR_WIDTH * SCR_DEPTH)
 #define SCR_SIZE		((SCR_WIDTH) * (SCR_HEIGHT) * (SCR_DEPTH))
-#define VMEM_ADDR		0xFD000000
+//#define VMEM_ADDR		0xFD000000
 //uint32_t VMEM_ADDR;
 
 #define LS_WIDTH		80

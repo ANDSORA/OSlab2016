@@ -4,17 +4,18 @@
 #include <include/x86.h>
 #include <include/string.h>
 
+void init_vmem_addr();
 void init_serial();
 void init_i8259();
 void init_idt();
 void init_timer();
-//void init_vmem();
 
 void printk_test();
 
 void game_main();
 
 void INIT_WORK(){
+	init_vmem_addr();
 	init_serial();
 	init_i8259();
 	init_idt();
@@ -27,12 +28,12 @@ void TEST_WORK(){
 }
 
 int main(void) {
-	//struct ModeInfoBlock *MIB = (struct ModeInfoBlock *)(0x7e00);
-	//VMEM_ADDR = MIB->physbase;
-	//printk("%x\n", MIB->physbase);
 
 	INIT_WORK();
 
+	struct ModeInfoBlock *MIB = (struct ModeInfoBlock *)(0x7e00);
+	//VMEM_ADDR = MIB->physbase;
+	printk("%x\n", MIB->physbase);
 	//TEST_WORK();
 	printk("Here is main()\n");
 
