@@ -1,31 +1,16 @@
-#include <include/device/video.h>
-#include <include/logo.h>
-#include <include/string.h>
-#include <include/device/video_mode.h>
+#include "video.h"
+#include "pic.h"
+#include "string.h"
 
-//uint8_t *vmem = ((uint8_t*)VMEM_ADDR);
-uint8_t *vmem;
 extern uint8_t v_buffer[SCR_SIZE];
-
-void init_vmem_addr() {
-	struct ModeInfoBlock *MIB = (struct ModeInfoBlock *)(0x7e00);
-	vmem = (uint8_t *)MIB->physbase;
-}
-
-inline void init_vmem() {
-	memcpy(vmem, gImage_PARK, SCR_SIZE);
-}
-
-inline void clear_screen() {
-	memset(vmem, 0x00, SCR_SIZE);
-}
 
 inline void clear_buffer() {
 	memset(v_buffer, 0x00, SCR_SIZE);
 }
 
 inline void display_buffer() {
-	memcpy(vmem, v_buffer, SCR_SIZE);
+	// You have work to do here !!!
+	//memcpy(vmem, v_buffer, SCR_SIZE);
 }
 
 inline void drawRect_buffer(const uint8_t *src, int x, int y, int w, int h){
@@ -39,6 +24,8 @@ inline void drawRect_buffer(const uint8_t *src, int x, int y, int w, int h){
 	}
 }
 
+
+/* something old, and would never be used
 static int logo_x = 0, logo_y = 0;
 static int inc_x = 1, inc_y = 1;
 
@@ -65,4 +52,4 @@ void show_police() {
 		memcpy(vmem + i * SCR_WIDTH_SIZE + FF_WIDTH_SIZE * 4, gImage_FeiFan_4 + i * FF_WIDTH_SIZE, FF_WIDTH_SIZE);
 		memcpy(vmem + i * SCR_WIDTH_SIZE + FF_WIDTH_SIZE * 5, gImage_FeiFan_5 + i * FF_WIDTH_SIZE, FF_WIDTH_SIZE);
 	}
-}
+} */

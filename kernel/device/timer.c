@@ -1,5 +1,5 @@
-#include <include/common.h>
-#include <include/x86.h>
+#include "common.h"
+#include "x86.h"
 
 #define PORT_CH_0 0x40
 #define PORT_CMD 0x43

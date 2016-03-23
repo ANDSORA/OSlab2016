@@ -1,11 +1,12 @@
-#include <include/common.h>
-#include <include/x86.h>
-#include <include/device/keyboard.h>
-#include <include/device/video.h>
+#include "common.h"
+#include "x86.h"
+#include "keyboard.h"
+#include "video.h"
 
 //void process_keys();
 
-extern uint32_t time_tick;
+//extern uint32_t time_tick;
+uint32_t time_tick;
 
 /*
 static bool reborn;
@@ -25,7 +26,7 @@ void draw_screen();
 
 void game_loop()
 {
-	printk("Here is game_loop()\n");
+	//printk("Here is game_loop()\n");
 
 	bool dead_flag = false;
 	uint32_t now = time_tick, target;
@@ -54,6 +55,6 @@ void game_loop()
 		if(dead_flag) break;
 	}
 
-	clear_screen();
+	//clear_screen();
 	//while(1);
 }

@@ -1,9 +1,9 @@
-#include <include/common.h>
-#include <include/x86.h>
-#include <include/device/keyboard.h>
-#include <include/device/video.h>
-#include <include/logo.h>
-#include <include/string.h>
+#include "common.h"
+#include "x86.h"
+#include "keyboard.h"
+#include "video.h"
+#include "pic.h"
+#include "string.h"
 
 #define NR_ENEMY 10
 #define NR_BULLET 100

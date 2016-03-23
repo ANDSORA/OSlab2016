@@ -1,5 +1,5 @@
-#include <include/common.h>
-#include <include/irq.h>
+#include "common.h"
+#include "irq.h"
 
 #define NR_IRQ_HANDLE 32
 #define NR_HARD_INTR 16 /* At most 16 kinds of hardware interrupts. */

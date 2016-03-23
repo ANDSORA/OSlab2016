@@ -1,6 +1,6 @@
-#include <include/types.h>
-#include <include/x86.h>
-#include <include/mmu.h>
+#include "types.h"
+#include "x86.h"
+#include "mmu.h"
 
 #define INTERRUPT_GATE_32   0xE
 #define TRAP_GATE_32        0xF

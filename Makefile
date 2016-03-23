@@ -14,7 +14,7 @@ GDB     := gdb
 CFLAGS := -Wall -Werror -Wfatal-errors #开启所有警告, 视警告为错误, 第一个错误结束编译
 CFLAGS += -MD #生成依赖文件
 CFLAGS += -std=gnu11 -m32 -c #编译标准, 目标架构, 只编译
-CFLAGS += -I . #头文件搜索目录
+#CFLAGS += -I . #头文件搜索目录
 CFLAGS += -O0 #不开优化, 方便调试
 CFLAGS += -fno-builtin #禁止内置函数
 CFLAGS += -ggdb3 #GDB调试信息
@@ -70,13 +70,13 @@ $(BOOT): $(BOOT_O)
 	perl ./boot/genboot.pl $@
 #	ruby ./boot/mbr.rb $@
 
-$(OBJ_BOOT_DIR)/%.o: $(BOOT_DIR)/%.S
+$(OBJ_BOOT_DIR)/%.o: $(BOOT_DIR)/%.[cS]
 	@mkdir -p $(OBJ_BOOT_DIR)
-	$(CC) $(CFLAGS) -Os $< -o $@
+	$(CC) $(CFLAGS) -Os -I ./boot/inc $< -o $@
 
-$(OBJ_BOOT_DIR)/%.o: $(BOOT_DIR)/%.c
-	@mkdir -p $(OBJ_BOOT_DIR)
-	$(CC) $(CFLAGS) -Os $< -o $@
+#$(OBJ_BOOT_DIR)/%.o: $(BOOT_DIR)/%.c
+#	@mkdir -p $(OBJ_BOOT_DIR)
+#	$(CC) $(CFLAGS) -Os -I ./boot/inc $< -o $@
 
 $(PROGRAM): $(KERNEL) $(GAME)
 	cat $(KERNEL) $(GAME) > $(PROGRAM)
@@ -92,7 +92,7 @@ $(OBJ_LIB_DIR)/%.o : $(LIB_DIR)/%.c
 
 $(OBJ_KERNEL_DIR)/%.o: $(KERNEL_DIR)/%.[cS]
 	mkdir -p $(OBJ_DIR)/$(dir $<)
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) -I ./kernel/inc $< -o $@
 
 $(GAME): $(GAME_LD_SCRIPT)
 $(GAME): $(GAME_O) $(LIB_O)
@@ -100,7 +100,7 @@ $(GAME): $(GAME_O) $(LIB_O)
 
 $(OBJ_GAME_DIR)/%.o: $(GAME_DIR)/%.c
 	mkdir -p $(OBJ_DIR)/$(dir $<)
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) -I ./game/inc $< -o $@
 
 DEPS := $(shell find -name "*.d")
 -include $(DEPS)
