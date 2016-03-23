@@ -15,6 +15,7 @@ void init_idt();
 void init_timer();
 
 void printk_test();
+void serial_output_test();
 
 void INIT_WORK(){
 	init_vmem_addr();
@@ -26,16 +27,19 @@ void INIT_WORK(){
 }
 
 void TEST_WORK(){
+	serial_output_test();
 	printk_test();
 }
 
 int main(void) {
 
 	INIT_WORK();
-	//TEST_WORK();
+	TEST_WORK();
 	//while(1);
 
 	printk("Here is main()\n");
+
+	//while(1);
 
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;
@@ -43,7 +47,7 @@ int main(void) {
 
 	elf = (struct Elf*)0x190000;
 
-	readseg((unsigned char*)elf, 4096, 100*1024);
+	readseg((unsigned char*)elf, 4096, 10*1024*1024);
 
 	ph = (struct Proghdr*)((char *)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
@@ -52,6 +56,9 @@ int main(void) {
 		readseg(pa, ph->p_filesz, ph->p_offset);
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
+
+	printk("here we would go!\n");
+	//while(1);
 
 	((void(*)(void))elf->e_entry)(); /* Here we go! */
 
