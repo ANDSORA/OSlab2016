@@ -13,6 +13,9 @@ void init_serial();
 void init_i8259();
 void init_idt();
 void init_timer();
+void add_irq_handle(int,void (*)(void));
+void timer_event();
+void keyboard_event();
 
 void printk_test();
 void serial_output_test();
@@ -24,6 +27,8 @@ void INIT_WORK(){
 	init_idt();
 	init_timer();
 	init_vmem();
+	add_irq_handle(0, timer_event);
+	add_irq_handle(1, keyboard_event);
 }
 
 void TEST_WORK(){
@@ -35,11 +40,8 @@ int main(void) {
 
 	INIT_WORK();
 	TEST_WORK();
-	//while(1);
 
 	printk("Here is main()\n");
-
-	//while(1);
 
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;
@@ -58,7 +60,6 @@ int main(void) {
 	}
 
 	printk("here we would go!\n");
-	//while(1);
 
 	((void(*)(void))elf->e_entry)(); /* Here we go! */
 

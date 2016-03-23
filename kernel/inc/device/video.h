@@ -39,13 +39,18 @@ struct Surface {
 
 extern uint8_t *vmem;
 
+void init_vmem_addr();
 void init_vmem();
+int load_vmem(uint8_t*);
+
+/*
 void clear_screen();
 void clear_buffer();
 void display_buffer();
 void drawRect_buffer(const uint8_t*,int,int,int,int);
 void flyying_logo();
 void show_police();
+*/
 
 /*
 static inline void

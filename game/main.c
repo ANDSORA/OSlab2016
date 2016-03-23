@@ -1,12 +1,8 @@
 #include "common.h"
 #include "x86.h"
-//#include "device/keyboard.h"
+#include "inc/video.h"
 
-//void add_irq_handle(int, void(*)(void));
-//void timer_event();
-//void keyboard_event();
 void process_keys();
-//void clear_screen();
 void init_effect();
 void game_loop();
 
@@ -21,11 +17,6 @@ void close_reborn() {
 
 void game_main()
 {
-	//printk("Here is game_main()\n");
-
-	//add_irq_handle(0, timer_event);
-	//add_irq_handle(1, keyboard_event);
-
 	while(1);
 
 	reborn = false;
@@ -34,7 +25,8 @@ void game_main()
 		hlt();
 		process_keys();
 		if(reborn) {
-			//clear_screen();
+			clear_buffer();
+			display_buffer();
 			init_effect();
 			game_loop();
 		}

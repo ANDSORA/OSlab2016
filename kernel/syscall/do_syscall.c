@@ -1,5 +1,17 @@
+#include "common.h"
 #include "irq.h"
 
-int do_syscall(TrapFrame *tf) {
-	return tf->eax;
+enum {SYS_time, SYS_kbd, SYS_video};
+
+extern uint32_t time_tick;
+int handle_keys();
+int load_vmem(uint8_t*);
+
+void do_syscall(TrapFrame *tf) {
+	switch(tf->eax) {
+		case SYS_time:	tf->eax = time_tick; break;
+		case SYS_kbd:	tf->eax = handle_keys(); break;
+		case SYS_video:	tf->eax = load_vmem((uint8_t *)tf->ebx); break;
+		default: panic("Unhandled system call: id = %d", tf->eax);
+	}
 }

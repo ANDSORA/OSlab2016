@@ -8,7 +8,7 @@
 #define NR_ENEMY 10
 #define NR_BULLET 100
 
-uint8_t v_buffer[SCR_SIZE];
+extern uint8_t v_buffer[SCR_SIZE];
 int x_player, inc_player;
 bool enable_bullet;
 

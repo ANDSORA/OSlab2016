@@ -38,8 +38,8 @@ struct Surface {
 void clear_buffer();
 void display_buffer();
 void drawRect_buffer(const uint8_t*,int,int,int,int);
-void flyying_logo();
-void show_police();
+//void flyying_logo();
+//void show_police();
 
 /*
 static inline void

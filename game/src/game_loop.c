@@ -2,11 +2,12 @@
 #include "x86.h"
 #include "keyboard.h"
 #include "video.h"
+#include "syscall.h"
 
 //void process_keys();
 
 //extern uint32_t time_tick;
-uint32_t time_tick;
+//uint32_t time_tick;
 
 /*
 static bool reborn;
@@ -29,19 +30,19 @@ void game_loop()
 	//printk("Here is game_loop()\n");
 
 	bool dead_flag = false;
-	uint32_t now = time_tick, target;
+	uint32_t now = get_time(), target;
 	while(1){
 		hlt();
 		cli();
-		if(now == time_tick){
+		if(now == get_time()){
 			sti();
 			continue;
 		}
 
-		target = time_tick;
+		target = get_time();
 		sti();
 
-		process_keys();
+		while(process_keys());
 
 		while(now < target){
 			if(now % 5 == 0) update_bullet();
