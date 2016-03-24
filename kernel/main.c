@@ -6,6 +6,7 @@
 #include "string.h"
 
 #define SECTSIZE 512
+#define GAME_OFFSET_IN_DISK (10 * 1024 * 1024)
 void readseg(unsigned char*,int,int);
 
 void init_vmem_addr();
@@ -51,13 +52,13 @@ int main(void) {
 	uint8_t buf[4096];
 	elf = (struct Elf*)buf;
 
-	readseg((unsigned char*)elf, 4096, 10*1024*1024);
+	readseg((unsigned char*)elf, 4096, GAME_OFFSET_IN_DISK);
 
 	ph = (struct Proghdr*)((char *)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for(; ph < eph; ph ++) {
 		pa = (unsigned char*)ph->p_pa;
-		readseg(pa, ph->p_filesz, 10*1024*1024 + ph->p_offset);
+		readseg(pa, ph->p_filesz, GAME_OFFSET_IN_DISK + ph->p_offset);
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
 

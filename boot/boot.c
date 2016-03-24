@@ -3,6 +3,7 @@
 //#include "boot.h"
 
 #define SECTSIZE 512
+#define KERNEL_OFFSET_IN_DISK 0
 
 void readseg(unsigned char*,int,int);
 
@@ -14,13 +15,13 @@ int bootmain(void)
 
 	elf = (struct Elf*)0x8000;
 
-	readseg((unsigned char*)elf, 4096, 0);
+	readseg((unsigned char*)elf, 4096, KERNEL_OFFSET_IN_DISK);
 
 	ph = (struct Proghdr*)((char *)elf + elf->e_phoff);
 	eph = ph + elf->e_phnum;
 	for(; ph < eph; ph ++) {
 		pa = (unsigned char*)ph->p_pa;
-		readseg(pa, ph->p_filesz, ph->p_offset);
+		readseg(pa, ph->p_filesz, KERNEL_OFFSET_IN_DISK + ph->p_offset);
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
 

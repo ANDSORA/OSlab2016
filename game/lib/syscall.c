@@ -2,7 +2,7 @@
 
 enum {SYS_time, SYS_kbd, SYS_video};
 
-int __attribute__((__noinline__))
+static inline int //__attribute__((__noinline__))
 syscall(int id, ...) {
 	int ret;
 	int *args = &id;
