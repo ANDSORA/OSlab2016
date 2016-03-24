@@ -47,7 +47,9 @@ int main(void) {
 	struct Proghdr *ph, *eph;
 	unsigned char *pa, *i;
 
-	elf = (struct Elf*)0x190000;
+	//elf = (struct Elf*)0x1f00000;
+	uint8_t buf[4096];
+	elf = (struct Elf*)buf;
 
 	readseg((unsigned char*)elf, 4096, 10*1024*1024);
 
@@ -55,13 +57,15 @@ int main(void) {
 	eph = ph + elf->e_phnum;
 	for(; ph < eph; ph ++) {
 		pa = (unsigned char*)ph->p_pa;
-		readseg(pa, ph->p_filesz, ph->p_offset);
+		readseg(pa, ph->p_filesz, 10*1024*1024 + ph->p_offset);
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
 
 	printk("here we would go!\n");
 
 	((void(*)(void))elf->e_entry)(); /* Here we go! */
+
+	while(1);
 
 	panic("YOU shouldn't get here!\n");
 	return 0;

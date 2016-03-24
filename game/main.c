@@ -17,10 +17,12 @@ void close_reborn() {
 
 void game_main()
 {
-	while(1);
+	
+	//while(1);
 
 	reborn = false;
 
+	//while(1);
 	while(1) {
 		hlt();
 		process_keys();

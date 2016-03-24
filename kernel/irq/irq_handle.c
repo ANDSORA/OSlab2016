@@ -27,12 +27,12 @@ void add_irq_handle(int irq, void (*func)(void) ) {
 }
 
 void irq_handle(TrapFrame *tf) {
-	//printk("irq_handle()\n");
+	printk("irq_handle(), irq=%d, eip=0x%x\n", tf->irq, tf->eip);
 
 	int irq = tf->irq;
 
 	if(irq == 0x80) do_syscall(tf);
-	else if(irq < 1000) panic("Unhandled exception!\n");
+	else if(irq < 1000) panic("Unhandled exception! irq==%d\n", irq);
 	else {
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
