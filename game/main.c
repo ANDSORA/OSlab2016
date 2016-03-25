@@ -18,11 +18,11 @@ void close_reborn() {
 void game_main()
 {
 	
-	sti();
+	sti(); //hlt(); cli();
 
-	//reborn = false;
+	reborn = false;
 
-	while(1);
+	//process_keys(); while(1);
 	while(1) {
 		hlt();
 		while(process_keys());

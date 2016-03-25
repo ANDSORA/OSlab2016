@@ -22,7 +22,6 @@ void printk_test();
 void serial_output_test();
 
 void INIT_WORK(){
-	while(1);
 	init_vmem_addr();
 	init_serial();
 	init_i8259();
@@ -41,19 +40,20 @@ void TEST_WORK(){
 int main(void) {
 
 	INIT_WORK(); //while(1);
-	TEST_WORK();
+	//TEST_WORK();
 
 	printk("Here is main()\n");
 
-	//while(1);
+	//sti(); hlt(); cli(); while(1);
 
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;
 	unsigned char *pa, *i;
 
-	//elf = (struct Elf*)0x1f00000;
-	uint8_t buf[4096];
-	elf = (struct Elf*)buf;
+	elf = (struct Elf*)0x1f00000;
+	//uint8_t buf[4096];
+	//elf = (struct Elf*)buf;
+	//printk("addr of buf: 0x%x\n", (uint32_t)buf);
 
 	readseg((unsigned char*)elf, 4096, GAME_OFFSET_IN_DISK);
 
@@ -61,11 +61,14 @@ int main(void) {
 	eph = ph + elf->e_phnum;
 	for(; ph < eph; ph ++) {
 		pa = (unsigned char*)ph->p_pa;
+		printk("0x%x, 0x%x, 0x%x\n", pa, ph->p_filesz, ph->p_memsz);
 		readseg(pa, ph->p_filesz, GAME_OFFSET_IN_DISK + ph->p_offset);
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
 
 	printk("here we would go!\n");
+
+	//sti(); hlt(); cli(); while(1);
 
 	((void(*)(void))elf->e_entry)(); /* Here we go! */
 

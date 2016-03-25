@@ -27,7 +27,7 @@ void add_irq_handle(int irq, void (*func)(void) ) {
 }
 
 void irq_handle(TrapFrame *tf) {
-	printk("irq_handle(), irq=%d, eip=0x%x\n", tf->irq, tf->eip);
+	//printk("irq_handle(), irq=%d, eip=0x%x\n", tf->irq, tf->eip);
 
 	int irq = tf->irq;
 
