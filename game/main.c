@@ -18,9 +18,9 @@ void close_reborn() {
 void game_main()
 {
 	
-	//sti();
+	sti();
 
-	reborn = false;
+	//reborn = false;
 
 	while(1);
 	while(1) {

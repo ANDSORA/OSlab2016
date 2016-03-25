@@ -22,6 +22,7 @@ void printk_test();
 void serial_output_test();
 
 void INIT_WORK(){
+	while(1);
 	init_vmem_addr();
 	init_serial();
 	init_i8259();
@@ -39,10 +40,12 @@ void TEST_WORK(){
 
 int main(void) {
 
-	INIT_WORK();
+	INIT_WORK(); //while(1);
 	TEST_WORK();
 
 	printk("Here is main()\n");
+
+	//while(1);
 
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;

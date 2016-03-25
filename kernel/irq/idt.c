@@ -1,6 +1,7 @@
 #include "types.h"
 #include "x86.h"
 #include "mmu.h"
+#include "common.h"
 
 #define INTERRUPT_GATE_32   0xE
 #define TRAP_GATE_32        0xF
@@ -40,6 +41,7 @@ static void write_idtr(void *addr, uint32_t size) {
 	data[0] = size - 1;
 	data[1] = (uint32_t)addr;
 	data[2] = ((uint32_t)addr) >> 16;
+	//printk("addr = 0x%x, syscall in idt is %x %x\n", addr, (*((uint32_t *)(addr + 8*0x80))), (*((uint32_t *)(addr + 8*0x80 + 4))));
 	lidt((void*)data);
 }
 
