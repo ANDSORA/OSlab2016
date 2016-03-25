@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include "common.h"
 #include "x86.h"
 
 int abort(const char* filename, int line) {

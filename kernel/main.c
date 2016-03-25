@@ -40,7 +40,7 @@ void TEST_WORK(){
 int main(void) {
 
 	INIT_WORK(); //while(1);
-	//TEST_WORK();
+	TEST_WORK();
 
 	printk("Here is main()\n");
 
@@ -50,10 +50,10 @@ int main(void) {
 	struct Proghdr *ph, *eph;
 	unsigned char *pa, *i;
 
-	elf = (struct Elf*)0x1f00000;
-	//uint8_t buf[4096];
-	//elf = (struct Elf*)buf;
-	//printk("addr of buf: 0x%x\n", (uint32_t)buf);
+	//elf = (struct Elf*)0x1f00000;
+	uint8_t buf[4096];
+	elf = (struct Elf*)buf;
+	printk("addr of buf: 0x%x\n", (uint32_t)buf);
 
 	readseg((unsigned char*)elf, 4096, GAME_OFFSET_IN_DISK);
 

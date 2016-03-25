@@ -3,6 +3,7 @@
 
 //#include "assert.h"
 #include "types.h"
-//#include "stdio.h"
+
+int printf(const char *, ...);
 
 #endif

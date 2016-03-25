@@ -17,7 +17,7 @@ void close_reborn() {
 
 void game_main()
 {
-	
+	printf("here is game_main()\n");
 	sti(); //hlt(); cli();
 
 	reborn = false;
