@@ -29,7 +29,7 @@ bool process_keys() {
 		get_press_key(keycode); return true;
 	}
 	else {
-		get_release_key(keycode); return true;
+		get_release_key(keycode - 0x80); return true;
 	}
 }
 
