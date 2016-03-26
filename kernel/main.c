@@ -9,6 +9,7 @@
 #define GAME_OFFSET_IN_DISK (10 * 1024 * 1024)
 void readseg(unsigned char*,int,int);
 
+void init_segment();
 void init_vmem_addr();
 void init_serial();
 void init_i8259();
@@ -22,6 +23,7 @@ void printk_test();
 void serial_output_test();
 
 void INIT_WORK(){
+	init_segment();
 	init_vmem_addr();
 	init_serial();
 	init_i8259();
@@ -44,7 +46,7 @@ int main(void) {
 
 	printk("Here is main()\n");
 
-	//sti(); hlt(); cli(); while(1);
+	sti(); //hlt(); cli(); while(1);
 
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;

@@ -124,28 +124,6 @@
 #define FEC_WR		0x2	// Page fault caused by a write
 #define FEC_U		0x4	// Page fault occured while in user mode
 
-// Segment related --ANDSORA
-#define SEG_CODEDATA            1
-#define SEG_32BIT               1
-#define SEG_4KB_GRANULARITY     1
-#define SEG_TSS_32BIT           0x9
-
-#define DPL_KERNEL              0
-#define DPL_USER                3
-
-#define SEG_WRITABLE            0x2
-#define SEG_READABLE            0x2
-#define SEG_EXECUTABLE          0x8
-
-#define NR_SEGMENTS             3
-#define SEG_KERNEL_NULL         0 
-#define SEG_KERNEL_CODE         1 
-#define SEG_KERNEL_DATA         2
-
-#define SELECTOR_KERNEL(s)		( (s << 3) | DPL_KERNEL )
-#define SELECTOR_USER(s)		( (s << 3) | DPL_USER )
-
-
 /*
  *
  *	Part 2.  Segmentation data structures and constants.
@@ -225,6 +203,23 @@ typedef struct SegmentDescriptor {
 #define STS_IG32	0xE	    // 32-bit Interrupt Gate
 #define STS_TG32	0xF	    // 32-bit Trap Gate
 
+#define DPL_KERNEL              0
+#define DPL_USER                3
+
+#define NR_SEGMENTS             64
+#define SEG_KERNEL_NULL         0 
+#define SEG_KERNEL_CODE         1 
+#define SEG_KERNEL_DATA         2
+//#define SEG_USER_CODE			3
+//#define SEG_USER_DATA			4
+#define SEG_TSS					3
+
+//construct the selector for kernel or user
+#define SELECTOR_KERNEL(s)		( (s << 3) | DPL_KERNEL )
+#define SELECTOR_USER(s)		( (s << 3) | DPL_USER )
+
+#define SELECTOR_INDEX(s)		(((s) >> 3) - 4)
+
 
 /*
  *
@@ -275,6 +270,14 @@ typedef struct TaskstateSegment {
 	uint16_t ts_iomb;	// I/O map base address
 } Taskstate;
 
+
+typedef struct {
+	uint32_t link;
+	uint32_t esp0;
+	uint32_t ss0;
+	char dontcare[88];
+}TSS;
+
 // Gate descriptors for interrupts and traps
 typedef struct GateDescriptor {
 	unsigned gd_off_15_0 : 16;   // low 16 bits of offset in segment
@@ -287,6 +290,26 @@ typedef struct GateDescriptor {
 	unsigned gd_p : 1;           // Present
 	unsigned gd_off_31_16 : 16;  // high bits of offset in segment
 } Gatedesc;
+
+/*
+struct TrapFrame {
+	uint32_t edi, esi, ebp, esp_;
+	uint32_t ebx, edx, ecx, eax;
+	uint32_t gs, fs, es, ds;
+
+	int irq;
+	uint32_t err;
+	uint32_t eip;
+	uint16_t cs;
+	uint16_t padding3;
+	uint32_t eflags; // Execution state before trap
+	uint32_t esp;
+	uint16_t ss;
+	uint16_t padding4;
+}__attribute__((packed));
+
+typedef struct TrapFrame TrapFrame;
+*/
 
 // Set up a normal interrupt/trap gate descriptor.
 // - istrap: 1 for a trap (= exception) gate, 0 for an interrupt gate.
