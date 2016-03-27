@@ -10,8 +10,8 @@ static TSS tss;
 
 inline static void
 set_tss(Segdesc *ptr) {
-	tss.esp0 = KERNEL_SIZE;
-	tss.ss0 = SELECTOR_KERNEL(SEG_KERNEL_DATA);		// only one ring 0 stack segment
+	//tss.esp0 = KERNEL_SIZE;
+	//tss.ss0 = SELECTOR_KERNEL(SEG_KERNEL_DATA);		// only one ring 0 stack segment
 
 	uint32_t base = (uint32_t)&tss;
 	uint32_t limit = sizeof(TSS) - 1;
@@ -82,10 +82,54 @@ int get_segment() {
 	return -1;
 }
 
-bool write_user_segment(int seg_mem_idx) {
-	int code_idx = get_segment(); if(code_idx == -1) return false;
-	set_segment(&gdt[code_idx], KERNEL_SIZE + seg_mem_idx * USER_SIZE, (USER_SIZE - 1) >> 12, DPL_USER, STA_X | STA_R);
-	int data_idx = get_segment(); if(data_idx == -1) return false;
-	set_segment(&gdt[data_idx], KERNEL_SIZE + seg_mem_idx * USER_SIZE, (USER_SIZE - 1) >> 12, DPL_USER, STA_W);
-	return true;
+uint32_t get_seg_base(uint16_t sel) {
+	int seg_idx = (sel >> 3) & 0x1fff;
+	return gdt[seg_idx].sd_base_15_0 + (gdt[seg_idx].sd_base_23_16 << 16) + (gdt[seg_idx].sd_base_31_24 << 24);
+}
+
+uint32_t user_seg_malloc(PCB *pcb, uint32_t entry) {
+	int seg_mem_idx = get_user_seg_mem();
+	assert(seg_mem_idx >= 0 && seg_mem_idx < NR_USER_SEG_MEM);
+	fill_user_seg_mem(seg_mem_idx);
+	uint32_t seg_addr = KERNEL_SIZE + seg_mem_idx * USER_SIZE;
+
+	int code_idx = get_segment(); assert(code_idx != -1);
+	set_segment(&gdt[code_idx], seg_addr, (USER_SIZE - 1) >> 12, DPL_USER, STA_X | STA_R);
+	int data_idx = get_segment(); assert(data_idx != -1);
+	set_segment(&gdt[data_idx], seg_addr, (USER_SIZE - 1) >> 12, DPL_USER, STA_W);
+
+	tss.ss0 = SELECTOR_KERNEL(SEG_KERNEL_DATA);
+	tss.esp0 = ((uint32_t) pcb->kstack) + KSTACK_SIZE;
+	printk("\nsizeof TrapFrameA is: 0x%x\n", sizeof(TrapFrameA));
+	printk("ss0 = 0x%x,  esp0 = 0x%x\n\n", tss.ss0, tss.esp0);
+
+	TrapFrameA *tf = (TrapFrameA*)pcb->kstack;
+	tf->ebp = 0;
+	tf->eax = 1;
+	tf->ebx = 2;
+	tf->ecx = 3;
+	tf->edx = 4;
+	tf->gs = SELECTOR_USER(data_idx);
+	tf->fs = SELECTOR_USER(data_idx);
+	tf->es = SELECTOR_USER(data_idx);
+	tf->ds = SELECTOR_USER(data_idx);
+	tf->irq = 0;
+	tf->err = 0;
+	tf->eip = entry;
+	tf->cs = SELECTOR_USER(code_idx);
+	tf->eflags = 0x2 | FL_IF;
+	tf->esp = USER_SIZE - 4;
+	tf->ss = SELECTOR_USER(data_idx);
+	
+	printk("The TrapFrame we create:\n");
+	printk("%x\t%x\t%x\t%x\n", tf->edi, tf->esi, tf->ebp, tf->esp_);
+	printk("%x\t%x\t%x\t%x\n", tf->ebx, tf->edx, tf->ecx, tf->eax);
+	printk("%x\t%x\t%x\t%x\n", tf->gs, tf->fs, tf->es, tf->ds);
+	printk("irq = %d,  err = %d\n", tf->irq, tf->err);
+	printk("eip = 0x%x,  cs = 0x%x\n", tf->eip, tf->cs);
+	printk("eflags = 0x%x\n", tf->eflags);
+	printk("esp = 0x%x,  ss = 0x%x\n", tf->esp, tf->ss);
+
+
+	return seg_addr;
 }

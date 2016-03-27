@@ -291,8 +291,8 @@ typedef struct GateDescriptor {
 	unsigned gd_off_31_16 : 16;  // high bits of offset in segment
 } Gatedesc;
 
-/*
-struct TrapFrame {
+
+struct TrapFrameA {
 	uint32_t edi, esi, ebp, esp_;
 	uint32_t ebx, edx, ecx, eax;
 	uint32_t gs, fs, es, ds;
@@ -308,8 +308,8 @@ struct TrapFrame {
 	uint16_t padding4;
 }__attribute__((packed));
 
-typedef struct TrapFrame TrapFrame;
-*/
+typedef struct TrapFrameA TrapFrameA;
+
 
 // Set up a normal interrupt/trap gate descriptor.
 // - istrap: 1 for a trap (= exception) gate, 0 for an interrupt gate.

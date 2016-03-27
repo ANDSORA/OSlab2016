@@ -1,5 +1,5 @@
 #include "common.h"
-#include "x86.h"
+//#include "x86.h"
 #include "keyboard.h"
 #include "video.h"
 #include "pic.h"

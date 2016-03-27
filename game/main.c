@@ -1,5 +1,5 @@
 #include "common.h"
-#include "x86.h"
+//#include "x86.h"
 #include "inc/video.h"
 
 bool process_keys();
@@ -17,16 +17,20 @@ void close_reborn() {
 
 void game_main()
 {
-	printf("here is game_main()\n");
+	//while(1);
+	//sti(); hlt(); cli(); while(1);
+
+	printf("here is game_main()\n"); //while(1);
 	//sti(); //hlt(); cli();
 
 	reborn = false;
 
 	//process_keys(); while(1);
 	while(1) {
-		hlt();
+		//hlt();
 		while(process_keys());
 		if(reborn) {
+			while(1);
 			clear_buffer();
 			display_buffer();
 			init_effect();
