@@ -22,6 +22,9 @@ void game_main()
 
 	printf("here is game_main()\n"); //while(1);
 	//sti(); //hlt(); cli();
+	//clear_buffer();
+	//display_buffer();
+	//while(1);
 
 	reborn = false;
 
@@ -30,7 +33,7 @@ void game_main()
 		//hlt();
 		while(process_keys());
 		if(reborn) {
-			while(1);
+			//while(1);
 			clear_buffer();
 			display_buffer();
 			init_effect();

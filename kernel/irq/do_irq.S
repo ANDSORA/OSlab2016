@@ -32,6 +32,7 @@
 # You should make yourself understand it clearly.
 
 asm_do_irq:
+	cli					# To protect our context!
 	pushl	%ds
 	pushl	%es
 	pushl	%fs
@@ -48,7 +49,10 @@ asm_do_irq:
 	pushal
 
 	pushl	%esp		# ???
+
+	sti
 	call irq_handle
+	cli
 	
 	addl	$4, %esp
 	popal
@@ -62,4 +66,6 @@ asm_do_irq:
 	popl	%eax
 
 	addl	$24, %esp
+	sti
+
 	iret

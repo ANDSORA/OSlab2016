@@ -127,3 +127,5 @@ clean:
 	@rm -rf $(GAME)	   2> /dev/null
 	@rm -rf $(PROGRAM) 2> /dev/null
 	@rm -rf $(IMAGE)   2> /dev/null
+	@rm -rf *.S		2> /dev/null
+	@rm -rf *.elf	2> /dev/null

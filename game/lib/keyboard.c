@@ -23,7 +23,7 @@ void close_reborn();
 
 
 bool process_keys() {
-	printf("process keys\n");
+	//printf("process keys\n");
 	uint8_t keycode = get_kbd();
 	if(keycode == 0xff) return false;
 	if(keycode < 0x80) {

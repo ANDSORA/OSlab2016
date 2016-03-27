@@ -1,7 +1,8 @@
 #include "common.h"
-#include "irq.h"
+//#include "irq.h"
 #include "mmu.h"
 #include "memory.h"
+#include "x86.h"
 
 #define NR_IRQ_HANDLE 32
 #define NR_HARD_INTR 16 /* At most 16 kinds of hardware interrupts. */
@@ -42,6 +43,7 @@ uint32_t get_timer_handle() {
 }
 
 void irq_handle(TrapFrameA *tf) {
+	//printk("\nhere is irq_handle, irq=%d, esp=0x%x, eip=0x%x\n", tf->irq, tf->esp_, tf->eip);
 	/*
 	printk("here is irq_handle, and The TrapFrame:\n");
 	printk("%x\t%x\t%x\t%x\n", tf->edi, tf->esi, tf->ebp, tf->esp_);
@@ -56,7 +58,7 @@ void irq_handle(TrapFrameA *tf) {
 	int irq = tf->irq;
 
 	if(irq == 0x80) do_syscall(tf, get_seg_base(tf->ds));
-	else if(irq < 1000) panic("Unhandled exception! irq==%d\n", irq);
+	else if(irq < 1000) panic("Unhandled exception! irq==%d  eip=0x%x\n", irq, tf->eip);
 	else {
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
@@ -68,6 +70,7 @@ void irq_handle(TrapFrameA *tf) {
 		printk("handles[0]->routine = 0x%x\n", (uint32_t)(handles[0]->routine));
 		printk("let's work\n");
 		*/
+		//if(irq_id == 1) printk("eip == 0x%x\n", tf->eip);
 
 		while(f != NULL) {
 			//printk("we would execute 0x%x\n", (uint32_t)f->routine);
