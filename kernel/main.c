@@ -4,11 +4,14 @@
 #include "x86.h"
 #include "elf.h"
 #include "string.h"
+#include "memory.h"
 
 #define SECTSIZE 512
 #define GAME_OFFSET_IN_DISK (10 * 1024 * 1024)
 void readseg(unsigned char*,int,int);
 
+void init_page();
+void init_segment();
 void init_vmem_addr();
 void init_serial();
 void init_i8259();
@@ -21,13 +24,22 @@ void keyboard_event();
 void printk_test();
 void serial_output_test();
 
+int main(void);
+void init() {
+	init_page(); //while(1);
+	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
+	asm volatile("jmp *%0" : : "r"(main));
+	panic("You died in init()\n");
+}
+
 void INIT_WORK(){
+	init_segment();
 	init_vmem_addr();
-	init_serial();
+	init_serial(); printk("vmem == 0x%x\n", vmem);
 	init_i8259();
 	init_idt();
 	init_timer();
-	init_vmem();
+	init_vmem(); //while(1);
 	add_irq_handle(0, timer_event);
 	add_irq_handle(1, keyboard_event);
 }
@@ -42,7 +54,7 @@ int main(void) {
 	INIT_WORK(); //while(1);
 	TEST_WORK();
 
-	printk("Here is main()\n");
+	printk("Here is main()\n"); while(1);
 
 	//sti(); hlt(); cli(); while(1);
 
@@ -75,7 +87,6 @@ int main(void) {
 	while(1);
 
 	panic("YOU shouldn't get here!\n");
-	return 0;
 }
 
 

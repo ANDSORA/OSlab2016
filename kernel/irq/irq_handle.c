@@ -32,7 +32,27 @@ void irq_handle(TrapFrame *tf) {
 	int irq = tf->irq;
 
 	if(irq == 0x80) do_syscall(tf);
-	else if(irq < 1000) panic("Unhandled exception! irq==%d\n", irq);
+	else if(irq < 1000) {
+		switch(irq) {
+			case 0: printk("Divide Error!\t"); break;
+			case 1: printk("Debug Exceptions!\t"); break;
+			case 3: printk("Breakpoint!\t"); break;
+			case 4: printk("Overflow!\t"); break;
+			case 5: printk("Bounds Check!\t"); break;
+			case 6: printk("Invalid Opcode!\t"); break;
+			case 7: printk("Coprocessor Not Available!\t"); break;
+			case 8: printk("Double Fault!\t"); break;
+			case 9: printk("Coprocessor Segment Overrun!\t"); break;
+			case 10: printk("Invalid TSS!\t"); break;
+			case 11: printk("Segment Not Present!\t"); break;
+			case 12: printk("Stack Exception!\t"); break;
+			case 13: printk("General Protection Exception!\t"); break;
+			case 14: printk("Page Fault!\t"); break;
+			default: printk("Unhandled exception!\t"); break;
+		}
+		panic("irq==%d\n", irq);
+		//panic("Unhandled exception! irq==%d\n", irq);
+	}
 	else {
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
