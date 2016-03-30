@@ -5,6 +5,7 @@
 #include "elf.h"
 #include "string.h"
 #include "memory.h"
+#include "irq.h"
 
 #define SECTSIZE 512
 #define GAME_OFFSET_IN_DISK (10 * 1024 * 1024)
@@ -51,7 +52,8 @@ void TEST_WORK(){
 	printk_test();
 }
 
-uint32_t create_process(uint32_t disk_offset);
+PCB* create_process(uint32_t disk_offset);
+void set_trapframe(TrapFrameA*,uint32_t);
 
 int main(void) {
 
@@ -83,8 +85,24 @@ int main(void) {
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
 	*/
-	uint32_t entry = create_process(GAME_OFFSET_IN_DISK);
+	PCB *pcb_p = create_process(GAME_OFFSET_IN_DISK);
+	set_trapframe((void*)pcb_p->kstack, pcb_p->entry);
 
+	printk("Here we go!\n");
+
+	asm volatile("movl %0, %%esp" : :"a"(pcb_p->kstack));
+	asm volatile("popal;\
+				  pushl %eax;\
+				  movw 4(%esp), %ax;\
+				  movw %ax, %gs;\
+				  movw %ax, %fs;\
+				  movw %ax, %es;\
+				  movw %ax, %ds;\
+				  popl %eax;\
+				  addl $0x18, %esp;\
+				  iret");
+
+	/*
 	printk("(kernel_main) I would modify the esp\n");
 	asm volatile("movl %0, %%esp" : : "i"(KOFFSET));
 	//asm volatile("movl $0, %ebp");
@@ -98,7 +116,7 @@ int main(void) {
 
 	//sti(); hlt(); cli(); while(1);
 
-	((void(*)(void))entry)(); /* Here we go! */
+	((void(*)(void))entry)(); */
 
 	panic("YOU shouldn't get here!\n");
 

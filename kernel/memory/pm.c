@@ -11,19 +11,21 @@
 #define SECTSIZE 512
 #define GAME_OFFSET_IN_DISK (10 * 1024 * 1024)
 
+/*
 typedef struct PCB {
 	int PID;
 	int _free_pte;
+	uint32_t entry;
 	CR3 ucr3;
 	PDE updir[NR_PDE] align_to_page;
 	PTE uptable[3][NR_PTE] align_to_page;
 	uint8_t kstack[4096];
-} PCB;
+} PCB; */
 
 bool pcb_present[NR_PCB];
 static PCB pcb[NR_PCB];
 
-uint32_t create_process(uint32_t);
+PCB* create_process(uint32_t);
 PDE* get_kpdir();
 void mm_malloc(int,uint32_t,int);
 void readseg(unsigned char*,int,int);
@@ -35,6 +37,7 @@ void init_pcb(void) {
 	for(i=0; i<NR_PCB; ++i) {
 		pcb[i].PID = i;
 		pcb[i]._free_pte = 0;
+		pcb[i].entry = 0;
 
 		/* initialize the ucr3 */
 		pcb[i].ucr3.val = 0;
@@ -69,7 +72,7 @@ void free_pcb(int i) {
 
 uint32_t page_trans(int, uint32_t);
 
-uint32_t create_process(uint32_t disk_offset) {
+PCB* create_process(uint32_t disk_offset) {
 	int pcb_idx = get_pcb();
 	if(pcb_idx < 0) panic("No more available pcb!\n");
 	
@@ -142,7 +145,8 @@ uint32_t create_process(uint32_t disk_offset) {
 	printk("(create_process) ucr3=0x%x, updir=0x%x\n", pcb[pcb_idx].ucr3.val, pcb[pcb_idx].updir);
 	lcr3(pcb[pcb_idx].ucr3.val);
 	printk("(create_process) about to leave\n"); //while(1);
-	return elf->e_entry;
+	pcb[pcb_idx].entry = elf->e_entry;
+	return &pcb[pcb_idx];
 }
 
 void mm_malloc(int pcb_idx, uint32_t pde_idx, int pde_num) {

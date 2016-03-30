@@ -10,6 +10,7 @@
 #define PHY_MEM		0x8000000
 #define KERNEL_SIZE	0x1000000
 #define USER_SIZE	0x100000
+#define KSTACK_SIZE	4096
 
 #define va_to_pa(x) (((unsigned)x) - KOFFSET)
 #define pa_to_va(x) (((unsigned)x) + KOFFSET)
@@ -82,6 +83,16 @@ typedef union CR3 {
 	uint32_t val;
 } CR3;
 
+typedef struct PCB {
+	int PID;
+	int _free_pte;
+	uint32_t entry;
+	CR3 ucr3;
+	PDE updir[NR_PDE] align_to_page;
+	PTE uptable[3][NR_PTE] align_to_page;
+	uint8_t kstack[4096];
+} PCB;
+
 /*
 typedef struct GateDescriptor {
 	uint32_t offset_15_0      : 16;
@@ -102,6 +113,6 @@ void free_pte(int);
 
 /* from pm.c */
 void init_pcb();
-uint32_t create_process(uint32_t);
+PCB* create_process(uint32_t);
 
 #endif

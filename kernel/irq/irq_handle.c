@@ -13,7 +13,7 @@ static struct IRQ_t handle_pool[NR_IRQ_HANDLE];
 static struct IRQ_t *handles[NR_HARD_INTR]; // handles is an array of lists
 static int handle_count = 0;
 
-void do_syscall(TrapFrame *);
+void do_syscall(TrapFrameA *);
 
 void add_irq_handle(int irq, void (*func)(void) ) {
 	assert(irq < NR_HARD_INTR);
@@ -26,7 +26,7 @@ void add_irq_handle(int irq, void (*func)(void) ) {
 	handles[irq] = ptr;
 }
 
-void irq_handle(TrapFrame *tf) {
+void irq_handle(TrapFrameA *tf) {
 	//printk("irq_handle(), irq=%d, eip=0x%x\n", tf->irq, tf->eip);
 
 	int irq = tf->irq;

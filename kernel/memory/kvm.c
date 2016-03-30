@@ -3,6 +3,7 @@
 #include "x86.h"
 #include "memory.h"
 #include "string.h"
+#include "irq.h"
 
 static PDE kpdir[NR_PDE] align_to_page;
 static PTE kptable[PHY_MEM / PGSIZE] align_to_page;
@@ -51,6 +52,28 @@ void init_page(void) {
 	//while(1);
 }
 
+
+static Taskstate tss;
+
+static void set_tss(Segdesc *ptr) {
+	tss.ts_ss0 = SELECTOR_KERNEL(SEG_KERNEL_DATA);
+	uint32_t base = (uint32_t)&tss;
+	uint32_t limit = sizeof(Taskstate) - 1;
+	ptr->sd_lim_15_0 = limit & 0xffff;
+	ptr->sd_base_15_0 = base & 0xffff;
+	ptr->sd_base_23_16 = (base >> 16) & 0xff;
+	ptr->sd_type = STS_T32A;
+	ptr->sd_s = 0;
+	ptr->sd_dpl = DPL_USER;
+	ptr->sd_p = 1;
+	ptr->sd_lim_19_16 = limit >> 16;
+	ptr->sd_avl = 0;
+	ptr->sd_rsv1 = 0;
+	ptr->sd_db = 1;
+	ptr->sd_g = 0;
+	ptr->sd_base_31_24 = base >> 24;
+}
+
 static Segdesc gdt[NR_SEGMENTS];
 
 static void
@@ -79,11 +102,50 @@ static void write_gdtr(void *addr, uint32_t size) {
 	lgdt((void*)data);
 }
 
-void
-init_segment(void) {
+void init_segment(void) {
 	memset(gdt, 0, sizeof(gdt));
 	set_segment(&gdt[SEG_KERNEL_CODE], DPL_KERNEL, STA_X | STA_R);
 	set_segment(&gdt[SEG_KERNEL_DATA], DPL_KERNEL, STA_W);
+	set_segment(&gdt[SEG_USER_CODE], DPL_USER, STA_X | STA_R);
+	set_segment(&gdt[SEG_USER_DATA], DPL_USER, STA_W);
+	set_tss(&gdt[SEG_TSS]);
 
 	write_gdtr(gdt, sizeof(gdt));
+	ltr( SELECTOR_USER(SEG_TSS) );
+}
+
+void write_tss_esp0(uint32_t esp0) {
+	tss.ts_esp0 = esp0;
+}
+
+void set_trapframe(TrapFrameA *tf, uint32_t entry) {
+	tss.ts_esp0 = ((uint32_t) tf) + KSTACK_SIZE;
+	printk("\nsizeof TrapFrameA is: 0x%x\n", sizeof(TrapFrameA));
+	printk("ss0 = 0x%x,  esp0 = 0x%x\n\n", tss.ts_ss0, tss.ts_esp0);
+
+	tf->ebp = 0;
+	tf->eax = 1;
+	tf->ebx = 2;
+	tf->ecx = 3;
+	tf->edx = 4;
+	tf->gs = SELECTOR_USER(SEG_USER_DATA);
+	tf->fs = SELECTOR_USER(SEG_USER_DATA);
+	tf->es = SELECTOR_USER(SEG_USER_DATA);
+	tf->ds = SELECTOR_USER(SEG_USER_DATA);
+	tf->irq = 0;
+	tf->err = 0;
+	tf->eip = entry;
+	tf->cs = SELECTOR_USER(SEG_USER_CODE);
+	tf->eflags = 0x2 | FL_IF;
+	tf->esp = KOFFSET - 16;
+	tf->ss = SELECTOR_USER(SEG_USER_DATA);
+	
+	printk("The TrapFrame we create:\n");
+	printk("%x\t%x\t%x\t%x\n", tf->edi, tf->esi, tf->ebp, tf->esp_);
+	printk("%x\t%x\t%x\t%x\n", tf->ebx, tf->edx, tf->ecx, tf->eax);
+	printk("%x\t%x\t%x\t%x\n", tf->gs, tf->fs, tf->es, tf->ds);
+	printk("irq = %d,  err = %d\n", tf->irq, tf->err);
+	printk("eip = 0x%x,  cs = 0x%x\n", tf->eip, tf->cs);
+	printk("eflags = 0x%x\n", tf->eflags);
+	printk("esp = 0x%x,  ss = 0x%x\n", tf->esp, tf->ss);
 }

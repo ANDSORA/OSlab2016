@@ -209,12 +209,12 @@ typedef struct SegmentDescriptor {
 #define DPL_KERNEL              0
 #define DPL_USER                3
 
-#define NR_SEGMENTS             16
+#define NR_SEGMENTS             8
 #define SEG_KERNEL_CODE         1 
 #define SEG_KERNEL_DATA         2
-//#define SEG_USER_CODE			4
-//#define SEG_USER_DATA			5
-//#define SEG_TSS				3
+#define SEG_USER_CODE			3
+#define SEG_USER_DATA			4
+#define SEG_TSS					5
 
 
 

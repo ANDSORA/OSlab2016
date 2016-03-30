@@ -8,7 +8,7 @@ int fs_write(int, void*, int);
 int handle_keys();
 int load_vmem(uint8_t*);
 
-void do_syscall(TrapFrame *tf) {
+void do_syscall(TrapFrameA *tf) {
 	//printk("(syscall) tf->eax = %d\n", tf->eax);
 	switch(tf->eax) {
 		case SYS_write: tf->eax = fs_write(tf->ebx, (void *)tf->ecx, tf->edx); break;
