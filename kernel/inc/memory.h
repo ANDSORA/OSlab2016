@@ -6,8 +6,10 @@
 
 #define align_to_page __attribute((aligned(PGSIZE)))
 
-#define KOFFSET	0xC0000000
-#define PHY_MEM	0x8000000
+#define KOFFSET		0xC0000000
+#define PHY_MEM		0x8000000
+#define KERNEL_SIZE	0x1000000
+#define USER_SIZE	0x100000
 
 #define va_to_pa(x) (((unsigned)x) - KOFFSET)
 #define pa_to_va(x) (((unsigned)x) + KOFFSET)
@@ -92,5 +94,14 @@ typedef struct GateDescriptor {
 	uint32_t offset_31_16     : 16;
 } GateDesc;
 */
+
+/* from mm.c */
+void init_pte_info();
+uint32_t get_pte();
+void free_pte(int);
+
+/* from pm.c */
+void init_pcb();
+uint32_t create_process(uint32_t);
 
 #endif

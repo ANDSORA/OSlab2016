@@ -34,6 +34,8 @@ void init() {
 
 void INIT_WORK(){
 	init_segment();
+	init_pcb();
+	init_pte_info();
 	init_vmem_addr();
 	init_serial(); printk("vmem == 0x%x\n", vmem);
 	init_i8259();
@@ -49,15 +51,18 @@ void TEST_WORK(){
 	printk_test();
 }
 
+uint32_t create_process(uint32_t disk_offset);
+
 int main(void) {
 
-	INIT_WORK(); //while(1);
+	INIT_WORK();
 	TEST_WORK();
 
-	printk("Here is main()\n"); while(1);
+	printk("Here is main()\n"); //while(1);
 
 	//sti(); hlt(); cli(); while(1);
 
+	/*
 	struct Elf *elf;
 	struct Proghdr *ph, *eph;
 	unsigned char *pa, *i;
@@ -77,25 +82,27 @@ int main(void) {
 		readseg(pa, ph->p_filesz, GAME_OFFSET_IN_DISK + ph->p_offset);
 		for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
+	*/
+	uint32_t entry = create_process(GAME_OFFSET_IN_DISK);
 
 	printk("here we would go!\n");
 
 	//sti(); hlt(); cli(); while(1);
 
-	((void(*)(void))elf->e_entry)(); /* Here we go! */
+	((void(*)(void))entry)(); /* Here we go! */
 
 	while(1);
 
 	panic("YOU shouldn't get here!\n");
 }
 
-
+/*
 void waitdisk(void) {
 	while((inb(0x1f7) & 0xc0) != 0x40);
 }
 
 void readsect(void *dst, int offset) {
-	/* int i; */
+	* int i; *
 	waitdisk();
 
 	outb(0x1f2, 1);		// count = 1
@@ -108,10 +115,10 @@ void readsect(void *dst, int offset) {
 	waitdisk();
 
 	insl(0x1f0, dst, SECTSIZE/4);	//read a sector
-	/*	this part does the same thing
+	*	this part does the same thing
 	for(i = 0; i < SECTSIZE / 4; i ++) {
 		((int *)dst)[i] = in_long(0x1f0);
-	} */
+	} *
 }
 
 void readseg(unsigned char *pa, int count, int offset) {
@@ -122,3 +129,4 @@ void readseg(unsigned char *pa, int count, int offset) {
 	for(; pa < epa; pa += SECTSIZE, offset ++)
 		readsect(pa, offset);
 }
+*/
