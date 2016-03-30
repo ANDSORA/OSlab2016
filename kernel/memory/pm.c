@@ -30,6 +30,8 @@ void readseg(unsigned char*,int,int);
 
 void init_pcb(void) {
 	int i;
+	extern uint8_t *vmem;
+	uint32_t VMEM_ADDR = (uint32_t)vmem;
 	for(i=0; i<NR_PCB; ++i) {
 		pcb[i].PID = i;
 		pcb[i]._free_pte = 0;
@@ -42,10 +44,12 @@ void init_pcb(void) {
 		PDE *kpdir = get_kpdir();
 		memset(pcb[i].updir, 0, NR_PDE * sizeof(PDE));
 		memcpy(&pcb[i].updir[KOFFSET / PTSIZE], &kpdir[KOFFSET / PTSIZE], (PHY_MEM / PTSIZE) * sizeof(PDE));
+		pcb[i].updir[PDX(VMEM_ADDR)].val = kpdir[PDX(VMEM_ADDR)].val;
 
 		/* initialize the uPTE */
 		memset(pcb[i].uptable, 0, 3 * NR_PTE * sizeof(PTE));
 	}
+	printk("PDX(VMEM_ADDR) = 0x%x, pdir = 0x%x\n", PDX(VMEM_ADDR), pcb[0].updir[PDX(VMEM_ADDR)].val);
 	memset(pcb_present, 0, sizeof(pcb_present));
 }
 
@@ -133,7 +137,7 @@ uint32_t create_process(uint32_t disk_offset) {
 	/* for test */
 	printk("(create_process, test) entry = 0x%x, pa_entry = 0x%x, code of entry = 0x%x\n", elf->e_entry, page_trans(pcb_idx, elf->e_entry), *(uint32_t*)page_trans(pcb_idx, elf->e_entry));
 	printk("(create_process, test) va = 0x8048001, pa = 0x%x\n", page_trans(pcb_idx, 0x8048001));
-	printk("(create_process, test) va = 0x8068001, pa = 0x%x\n", page_trans(pcb_idx, 0x8068001));
+	printk("(create_process, test) va = 0x8068140, pa = 0x%x\n", page_trans(pcb_idx, 0x8068140));
 
 	printk("(create_process) ucr3=0x%x, updir=0x%x\n", pcb[pcb_idx].ucr3.val, pcb[pcb_idx].updir);
 	lcr3(pcb[pcb_idx].ucr3.val);

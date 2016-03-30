@@ -18,9 +18,10 @@ void close_reborn() {
 int main()
 {
 	//while(1);
-	printf("here is game_main()\n"); while(1);
+	printf("here is game_main()\n"); //while(1);
 	sti(); //hlt(); cli();
 
+	//while(1);
 	reborn = false;
 
 	//process_keys(); while(1);
@@ -28,8 +29,8 @@ int main()
 		hlt();
 		while(process_keys());
 		if(reborn) {
-			clear_buffer();
-			display_buffer();
+			clear_buffer(); //while(1);
+			display_buffer(); //while(1);
 			init_effect();
 			game_loop();
 		}

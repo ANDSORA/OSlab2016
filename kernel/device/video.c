@@ -16,6 +16,7 @@ void init_vmem() {
 } */
 
 int load_vmem(uint8_t *buffer) {
+	//printk("(load_vmem) buffer = 0x%x\n", buffer);
 	memcpy(vmem, buffer, SCR_SIZE);
 	return 1;
 }

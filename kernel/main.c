@@ -34,14 +34,14 @@ void init() {
 
 void INIT_WORK(){
 	init_segment();
+	init_vmem_addr();
+	init_vmem();
 	init_pcb();
 	init_pte_info();
-	init_vmem_addr();
 	init_serial(); printk("vmem == 0x%x\n", vmem);
 	init_i8259();
 	init_idt();
 	init_timer();
-	init_vmem(); //while(1);
 	add_irq_handle(0, timer_event);
 	add_irq_handle(1, keyboard_event);
 }
