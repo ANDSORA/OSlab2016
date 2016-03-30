@@ -15,9 +15,10 @@ void close_reborn() {
 }
 
 
-void game_main()
+int main()
 {
-	printf("here is game_main()\n");
+	//while(1);
+	printf("here is game_main()\n"); while(1);
 	sti(); //hlt(); cli();
 
 	reborn = false;

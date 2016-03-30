@@ -85,15 +85,24 @@ int main(void) {
 	*/
 	uint32_t entry = create_process(GAME_OFFSET_IN_DISK);
 
+	printk("(kernel_main) I would modify the esp\n");
+	asm volatile("movl %0, %%esp" : : "i"(KOFFSET));
+	//asm volatile("movl $0, %ebp");
+	asm volatile("subl $0x10, %esp");
+	printk("(kernel_main) esp modified!\n");
+	//while(1);
+
 	printk("here we would go!\n");
+
+	//while(1);
 
 	//sti(); hlt(); cli(); while(1);
 
 	((void(*)(void))entry)(); /* Here we go! */
 
-	while(1);
-
 	panic("YOU shouldn't get here!\n");
+
+	while(1);
 }
 
 /*

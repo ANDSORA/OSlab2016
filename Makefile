@@ -94,9 +94,9 @@ $(OBJ_KERNEL_DIR)/%.o: $(KERNEL_DIR)/%.[cS]
 	mkdir -p $(OBJ_DIR)/$(dir $<)
 	$(CC) $(CFLAGS) -I ./kernel/inc $< -o $@
 
-$(GAME): $(GAME_LD_SCRIPT)
+#$(GAME): $(GAME_LD_SCRIPT)
 $(GAME): $(GAME_O) $(LIB_O)
-	$(LD) -m elf_i386 -T $(GAME_LD_SCRIPT) -nostdlib -o $@ $^ $(shell $(CC) $(CFLAGS) -print-libgcc-file-name)
+	$(LD) -m elf_i386 -e main -nostdlib -o $@ $^ $(shell $(CC) $(CFLAGS) -print-libgcc-file-name)
 
 $(OBJ_GAME_DIR)/%.o: $(GAME_DIR)/%.c
 	mkdir -p $(OBJ_DIR)/$(dir $<)
@@ -127,3 +127,4 @@ clean:
 	@rm -rf $(GAME)	   2> /dev/null
 	@rm -rf $(PROGRAM) 2> /dev/null
 	@rm -rf $(IMAGE)   2> /dev/null
+	@rm -rf *.S *.elf  2> /dev/null

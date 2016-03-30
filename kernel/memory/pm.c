@@ -13,7 +13,7 @@
 
 typedef struct PCB {
 	int PID;
-	//int head_page_idx;
+	int _free_pte;
 	CR3 ucr3;
 	PDE updir[NR_PDE] align_to_page;
 	PTE uptable[3][NR_PTE] align_to_page;
@@ -32,6 +32,7 @@ void init_pcb(void) {
 	int i;
 	for(i=0; i<NR_PCB; ++i) {
 		pcb[i].PID = i;
+		pcb[i]._free_pte = 0;
 
 		/* initialize the ucr3 */
 		pcb[i].ucr3.val = 0;
@@ -85,7 +86,7 @@ uint32_t create_process(uint32_t disk_offset) {
 		if(ph->p_type != ELF_PROG_LOAD) continue;
 		va = ph->p_va;
 		int pde_num = PDX(va + ph->p_memsz - 1) - PDX(va) + 1;
-		printk("0x%x, 0x%x, 0x%x\n", va, ph->p_filesz, ph->p_memsz);
+		printk("0x%x, 0x%x, 0x%x, pde_num=0x%x\n", va, ph->p_filesz, ph->p_memsz, pde_num);
 
 		mm_malloc(pcb_idx, PDX(va), pde_num); //fill the pde and pte
 
@@ -109,21 +110,52 @@ uint32_t create_process(uint32_t disk_offset) {
 				memset((void*)page_trans(pcb_idx, start_va), 0, end_va - start_va);
 			}
 		}
+
+		printk("\n");
 		//readseg(pa, ph->p_filesz, GAME_OFFSET_IN_DISK + ph->p_offset);
 		//for(i = pa + ph->p_filesz; i < pa + ph->p_memsz; *i ++ = 0);
 	}
+	/* set for stack */
+	PCB *pcb_p = &pcb[pcb_idx];
+	uint32_t physbase = get_pte();
+	PDE *updir_p = &pcb_p->updir[PDX(KOFFSET - 1)];
+	int *_free = &pcb_p->_free_pte;
+	PTE *uptable_p = pcb_p->uptable[*_free]; (*_free) ++; assert((*_free) < 3);
+	updir_p->val = va_to_pa(uptable_p) | PTE_P | PTE_W | PTE_U;
+	printk("(create_process) physbase = 0x%x, updir of stack = 0x%x, uptable = 0x%x\n", physbase, updir_p, uptable_p);
+	int j;
+	for(j = 0; j < NR_PTE; ++ j) {
+		uptable_p->val = physbase | PTE_P | PTE_W | PTE_U;
+		//if(j%32 == 0) printk("uptable_p = 0x%x, val = 0x%x\n", uptable_p, uptable_p->val);
+		uptable_p ++; physbase += PGSIZE;
+	}
 
+	/* for test */
+	printk("(create_process, test) entry = 0x%x, pa_entry = 0x%x, code of entry = 0x%x\n", elf->e_entry, page_trans(pcb_idx, elf->e_entry), *(uint32_t*)page_trans(pcb_idx, elf->e_entry));
+	printk("(create_process, test) va = 0x8048001, pa = 0x%x\n", page_trans(pcb_idx, 0x8048001));
+	printk("(create_process, test) va = 0x8068001, pa = 0x%x\n", page_trans(pcb_idx, 0x8068001));
+
+	printk("(create_process) ucr3=0x%x, updir=0x%x\n", pcb[pcb_idx].ucr3.val, pcb[pcb_idx].updir);
+	lcr3(pcb[pcb_idx].ucr3.val);
+	printk("(create_process) about to leave\n"); //while(1);
 	return elf->e_entry;
 }
 
 void mm_malloc(int pcb_idx, uint32_t pde_idx, int pde_num) {
+	printk("(mm_malloc) pcb_idx=%d, pde_idx=0x%x, pde_num=0x%x\n", pcb_idx, pde_idx, pde_num);
 	Assert(pde_num <= 2, "Why so many pde? pde_num = %d\n", pde_num);
+
 	int i,j;
 	PCB *pcb_p = &pcb[pcb_idx];
 	for(i = 0; i < pde_num; ++ i) {
+		if(pcb_p->updir[pde_idx + i].present) {
+			printk("(mm_malloc) pde_idx = 0x%x has been allocated!\n", pde_idx + i);
+			continue;
+		}
 		uint32_t physbase = get_pte();
 		PDE *updir_p = &pcb_p->updir[pde_idx + i];
-		PTE *uptable_p = pcb_p->uptable[i];
+		int *_free = &pcb_p->_free_pte;
+		PTE *uptable_p = pcb_p->uptable[*_free]; (*_free) ++; assert((*_free) < 3);
 
 		updir_p->val = va_to_pa(uptable_p) | PTE_P | PTE_W | PTE_U;
 		for(j = 0; j < NR_PTE; ++ j) {
@@ -136,6 +168,7 @@ void mm_malloc(int pcb_idx, uint32_t pde_idx, int pde_num) {
 uint32_t page_trans(int pcb_idx, uint32_t va) {
 	PDE *updir_p = &pcb[pcb_idx].updir[PDX(va)];
 	PTE *uptable_p = (PTE*) ((updir_p->page_frame << PGSHIFT) + 4 * PTX(va));
+	printk("(page_trans) updir = 0x%x, uptable = 0x%x\n");
 	return (uptable_p->page_frame << PGSHIFT) + PGOFF(va);
 }
 
