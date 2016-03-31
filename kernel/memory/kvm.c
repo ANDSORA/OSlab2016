@@ -25,8 +25,8 @@ void init_page(void) {
 
 	/* fill PDEs */
 	for(pdir_idx = 0; pdir_idx < PHY_MEM / PTSIZE; pdir_idx ++) {
-		pdir[pdir_idx].val = PTE_ADDR(ptable) | PTE_P | PTE_W | PTE_U;
-		pdir[pdir_idx + KOFFSET / PTSIZE].val = PTE_ADDR(ptable) | PTE_P | PTE_W | PTE_U;
+		pdir[pdir_idx].val = PTE_ADDR(ptable) | PTE_P | PTE_W;
+		pdir[pdir_idx + KOFFSET / PTSIZE].val = PTE_ADDR(ptable) | PTE_P | PTE_W;
 		ptable += NR_PTE;
 	}
 
@@ -36,7 +36,7 @@ void init_page(void) {
 			1: stosl;\
 			   subl %0, %%eax;\
 			   jge 1b" : :
-			   "i"(PGSIZE), "a"((PHY_MEM - PGSIZE) | PTE_P | PTE_W | PTE_U), "D"(ptable - 1));
+			   "i"(PGSIZE), "a"((PHY_MEM - PGSIZE) | PTE_P | PTE_W), "D"(ptable - 1));
 
 	/* make CR3 to be the entry of page directory */
 	cr3.val = 0;

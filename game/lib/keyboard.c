@@ -1,5 +1,5 @@
 #include "common.h"
-#include "x86.h"
+//#include "x86.h"
 #include "scan_code.h"
 #include "syscall.h"
 
@@ -23,6 +23,7 @@ void close_reborn();
 
 
 bool process_keys() {
+	//printf("(process_keys)\n");
 	uint8_t keycode = get_kbd();
 	if(keycode == 0xff) return false;
 	if(keycode < 0x80) {

@@ -1,5 +1,5 @@
 #include "common.h"
-#include "x86.h"
+//#include "x86.h"
 #include "keyboard.h"
 #include "video.h"
 #include "syscall.h"
@@ -32,15 +32,15 @@ void game_loop()
 	bool dead_flag = false;
 	uint32_t now = get_time(), target;
 	while(1){
-		hlt();
-		cli();
+		//hlt();
+		//cli();
 		if(now == get_time()){
-			sti();
+			//sti();
 			continue;
 		}
 
 		target = get_time();
-		sti();
+		//sti();
 
 		while(process_keys());
 
